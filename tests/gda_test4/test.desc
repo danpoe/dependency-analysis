@@ -1,0 +1,9 @@
+CORE
+main.dep
+-gda -stats -max_level 10 -max_len 4
+^EXIT=0$
+^SIGNAL=0$
+^Number of assignments: 6$
+^Number of calls: 0$
+^Number of functions: 1$
+--

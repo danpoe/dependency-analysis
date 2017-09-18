@@ -1,0 +1,1114 @@
+main
+([main::argc, 1]; [main::argv, 1])
+(<0>)
+{
+  [main::$tmp::return_value_config_init$5, 1] r= config_init([cfg, 0]; [main::1::configfile, 1]);
+  <0> r= options_read([cfg, 0]; [opts, 0]);
+  [main::$tmp::return_value_stat$7, 1] r= stat([main::1::pidfile, 1]; [main::1::st, 0]);
+  [main::1::ctx, 1] r= fusesmb_cache_new_context([cfg, 0]);
+  <0> r= cache_servers([main::1::ctx, 1]);
+  <0> r= options_free([opts, 0]);
+
+}
+
+_start
+()
+()
+{
+  <0> r= __CPROVER_initialize();
+  [argc', 2],[argv', 2] := <0>;
+  <0> r= main([argc', 1]; [argv', 1]);
+
+}
+
+cache_servers
+([cache_servers::ctx, 1])
+(<0>; <0>; <0>; <0>)
+{
+  [cache, 1] r= sl_init();
+  [remove_function_pointers::tmp_return_val$1, 1] r= sl_strcmp([cache_servers::ctx, 1]; <0>);
+  [cache_servers::1::dir, 1] := [remove_function_pointers::tmp_return_val$1, 1];
+  [remove_function_pointers::tmp_return_val$2, 1] r= sl_strcasecmp([cache_servers::ctx, 1]; <0>);
+  [cache_servers::1::dir, 1] := [remove_function_pointers::tmp_return_val$2, 1];
+  [remove_function_pointers::tmp_return_val$3, 1] r= hash_comp_default([cache_servers::ctx, 1]; <0>);
+  [cache_servers::1::dir, 1] := [remove_function_pointers::tmp_return_val$3, 1];
+  <0> r= sl_strcmp([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  <0> r= sl_strcasecmp([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  <0> r= hash_comp_default([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  <0> r= hnode_free([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  <0> r= sl_free([cache, 1]);
+  [cache_servers::1::threads, 1] := [cache_servers::$tmp::return_value_malloc$1, 1];
+  [cache_servers::1::num_threads, 1] := <0>;
+  [remove_function_pointers::tmp_return_val$4, 1] r= sl_strcmp([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  [cache_servers::1::workgroup_dirent, 1] := [remove_function_pointers::tmp_return_val$4, 1];
+  [remove_function_pointers::tmp_return_val$5, 1] r= sl_strcasecmp([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  [cache_servers::1::workgroup_dirent, 1] := [remove_function_pointers::tmp_return_val$5, 1];
+  [remove_function_pointers::tmp_return_val$6, 1] r= hash_comp_default([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  [cache_servers::1::workgroup_dirent, 1] := [remove_function_pointers::tmp_return_val$6, 1];
+  [cache_servers::$tmp::tmp_if_expr$2, 1] := <0>;
+  [cache_servers::$tmp::tmp_if_expr$2, 1] := [cache_servers::1::workgroup_dirent, 2; smbc_type, 1];
+  [cache_servers::1::2::thread_arg, 1] := [cache_servers::$tmp::return_value___strdup$3, 1];
+  [cache_servers::$tmp::return_value_sl_find$4, 1] r= sl_find([opts, 1; ignore_workgroups, 1]; [cache_servers::1::workgroup_dirent, 2; name, 1]);
+  # case distinction for thread function
+  <0> r=workgroup_listing_thread([cache_servers::1::2::thread_arg, 1]);
+  [cache_servers::1::num_threads, 1] := [cache_servers::1::num_threads, 1];
+  [cache_servers::1::threads, 1] := [cache_servers::$tmp::return_value_realloc$5, 1];
+  <0> r= sl_strcmp([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  <0> r= sl_strcasecmp([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  <0> r= hash_comp_default([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  <0> r= hnode_free([cache_servers::ctx, 1]; [cache_servers::1::dir, 1]);
+  [cache_servers::1::i, 1] := <0>;
+  [cache_servers::1::i, 1] := [cache_servers::1::i, 1];
+  <0> r= sl_casesort([cache, 1]);
+  <0> r= sl_free([cache, 1]);
+  [cache_servers::1::i, 1] := <0>;
+  [cache_servers::$tmp::return_value_sl_count$8, 1] r= sl_count([cache, 1]);
+  [cache_servers::$tmp::return_value_sl_item$9, 1] r= sl_item([cache, 1]; [cache_servers::1::i, 1]);
+  [cache_servers::1::i, 1] := [cache_servers::1::i, 1];
+  <0> r= sl_free([cache, 1]);
+
+}
+
+nmblookup
+([nmblookup::wg, 1]; [nmblookup::sl, 1]; [nmblookup::ipcache, 1])
+(<0>; <0>; <0>; <0>; <0>)
+{
+  [nmblookup::1::ip_cmd_size, 1] := <0>;
+  [nmblookup::1::ip_cmd, 1] := [nmblookup::$tmp::return_value_malloc$1, 1];
+  [nmblookup::1::ip_cmd_len, 1] := [nmblookup::$tmp::return_value_strlen$2, 1];
+  [nmblookup::1::1::pip, 1] := [nmblookup::1::1::buf, 1];
+  [nmblookup::1::1::pip, 1] := [nmblookup::1::1::pip, 1];
+  [nmblookup::1::1::pip, 2] := <0>;
+  [nmblookup::1::1::len, 1] := [nmblookup::$tmp::return_value_strlen$6, 1];
+  [nmblookup::1::ip_cmd_len, 1] := [nmblookup::1::ip_cmd_len, 1],[nmblookup::1::1::len, 1];
+  [nmblookup::1::ip_cmd_size, 1] := [nmblookup::1::ip_cmd_size, 1];
+  [nmblookup::1::1::2::tmp, 1] := [nmblookup::$tmp::return_value_realloc$7, 1];
+  [nmblookup::1::ip_cmd_size, 1] := [nmblookup::1::ip_cmd_size, 1];
+  [nmblookup::1::ip_cmd_len, 1] := [nmblookup::1::ip_cmd_len, 1],[nmblookup::1::1::len, 1];
+  [nmblookup::1::ip_cmd, 1] := [nmblookup::1::1::2::tmp, 1];
+  [nmblookup::1::4::start, 1] := [nmblookup::1::4::buf, 1];
+  [nmblookup::1::4::2::tmp, 1] := [nmblookup::1::4::2::tmp, 1];
+  [nmblookup::1::4::2::end, 2] := <0>;
+  [nmblookup::1::4::4::sep, 1] := [nmblookup::1::4::buf, 1];
+  [nmblookup::1::4::4::sep, 2] := <0>;
+  [nmblookup::1::4::start, 1] := [nmblookup::1::4::start, 1];
+  [nmblookup::1::4::4::sep, 2] := <0>;
+  [nmblookup::1::4::4::sep, 1] := [nmblookup::1::4::4::sep, 1];
+  <0> r= sl_add([nmblookup::sl, 1]; [nmblookup::1::4::start, 1]; <0>);
+  [nmblookup::$tmp::return_value_hash_lookup$18, 1] r= hash_lookup([nmblookup::ipcache, 1]; [nmblookup::1::4::start, 1]);
+  <0> r= hash_alloc_insert([nmblookup::ipcache, 1]; [nmblookup::$tmp::return_value___strdup$16, 1]; [nmblookup::$tmp::return_value___strdup$17, 1]);
+
+}
+
+__CPROVER_initialize
+()
+()
+{
+  [__CPROVER_rounding_mode, 1] := <0>;
+  [__CPROVER_thread_id, 1] := <0>;
+  [__CPROVER_threads_exited, 1] := <0>;
+  [__CPROVER_next_thread_id, 1] := <0>;
+  [__CPROVER_pipe_count, 1] := <0>;
+  [__CPROVER_deallocated, 1] := <0>;
+  [__CPROVER_dead_object, 1] := <0>;
+  [__CPROVER_malloc_object, 1] := <0>;
+  [__CPROVER_malloc_size, 1] := <0>;
+  [__CPROVER_malloc_is_new_array, 1] := <0>;
+  [__CPROVER_memory_leak, 1] := <0>;
+  [fusesmb_auth_fn_cfg, 1] := <0>;
+  [fusesmb_auth_fn_cfg_mutex, 1] := <0>;
+  [hash_fun_default::1::randbox, 1] := <0>;
+  [hash_val_t_bit, 1] := <0>;
+  [cache, 1] := <0>;
+  [cfg, 1] := <0>;
+  [cache_mutex, 1] := <0>;
+  [opts, 1] := <0>;
+
+}
+
+stat
+([stat::__path, 1]; [stat::__statbuf, 1])
+([stat::$tmp::return_value___xstat$1, 1])
+{
+
+}
+
+sl_strcmp
+([sl_strcmp::p1, 1]; [sl_strcmp::p2, 1])
+([sl_strcmp::$tmp::tmp_statement_expression$1, 1])
+{
+  [sl_strcmp::$tmp::tmp_statement_expression$1, 1] := [sl_strcmp::$tmp::return_value___builtin_strcmp$2, 1];
+
+}
+
+sl_strcasecmp
+([sl_strcasecmp::p1, 1]; [sl_strcasecmp::p2, 1])
+([sl_strcasecmp::$tmp::return_value_strcasecmp$1, 1])
+{
+
+}
+
+sl_init
+()
+(<0>; <0>; [sl_init::1::sl, 1])
+{
+  [sl_init::1::sl, 1] := [sl_init::$tmp::return_value_malloc$1, 1];
+  [sl_init::1::sl, 2; lines, 1] := [sl_init::$tmp::return_value_malloc$2, 1];
+  [sl_init::1::sl, 2; maxlines, 1] := <0>;
+  [sl_init::1::sl, 2; numlines, 1] := <0>;
+  [sl_init::1::sl, 2; sorted, 1] := <0>;
+
+}
+
+sl_free
+([sl_free::sl, 1])
+()
+{
+  [sl_free::1::i, 1] := <0>;
+  [sl_free::$tmp::return_value_sl_count$1, 1] r= sl_count([sl_free::sl, 1]);
+  [sl_free::1::i, 1] := [sl_free::1::i, 1];
+
+}
+
+sl_add
+([sl_add::sl, 1]; [sl_add::str, 1]; [sl_add::do_malloc, 1])
+(<0>; <0>; <0>; <0>)
+{
+  [sl_add::1::1::new, 1] := [sl_add::$tmp::return_value_realloc$1, 1];
+  [sl_add::sl, 2; maxlines, 1] := [sl_add::sl, 2; maxlines, 1];
+  [sl_add::sl, 2; lines, 1] := [sl_add::1::1::new, 1];
+  [sl_add::sl, 2; lines, 2],[sl_add::sl, 2; numlines, 2] := [sl_add::$tmp::return_value_malloc$3, 1];
+  [sl_add::sl, 2; numlines, 1] := [sl_add::sl, 2; numlines, 1];
+  [sl_add::sl, 2; sorted, 1] := <0>;
+  [sl_add::sl, 2; lines, 2],[sl_add::sl, 2; numlines, 2] := [sl_add::str, 1];
+  [sl_add::sl, 2; numlines, 1] := [sl_add::sl, 2; numlines, 1];
+  [sl_add::sl, 2; sorted, 1] := <0>;
+
+}
+
+sl_clear
+([sl_clear::sl, 1])
+()
+{
+  [sl_clear::1::i, 1] := <0>;
+  [sl_clear::$tmp::return_value_sl_count$1, 1] r= sl_count([sl_clear::sl, 1]);
+  [sl_clear::1::i, 1] := [sl_clear::1::i, 1];
+  [sl_clear::sl, 2; numlines, 1] := <0>;
+
+}
+
+sl_find
+([sl_find::sl, 1]; [sl_find::str, 1])
+([sl_find::1::1::res, 2]; <0>; [sl_find::$tmp::return_value_sl_item$4, 1]; <0>)
+{
+  [sl_find::$tmp::return_value_sl_count$1, 1] r= sl_count([sl_find::sl, 1]);
+  [sl_find::$tmp::return_value_bsearch$2, 1] r= bsearch([sl_find::str, 0]; [sl_find::sl, 2; lines, 1]; [sl_find::$tmp::return_value_sl_count$1, 1]; <0>; [sl_strcmp, 0]);
+  [sl_find::1::1::res, 1] := [sl_find::$tmp::return_value_bsearch$2, 1];
+  [sl_find::1::i, 1] := <0>;
+  [sl_find::$tmp::return_value_sl_count$3, 1] r= sl_count([sl_find::sl, 1]);
+  [sl_find::$tmp::return_value_sl_item$6, 1] r= sl_item([sl_find::sl, 1]; [sl_find::1::i, 1]);
+  [sl_find::$tmp::tmp_statement_expression$5, 1] := [sl_find::$tmp::return_value___builtin_strcmp$7, 1];
+  [sl_find::$tmp::return_value_sl_item$4, 1] r= sl_item([sl_find::sl, 1]; [sl_find::1::i, 1]);
+  [sl_find::1::i, 1] := [sl_find::1::i, 1];
+
+}
+
+sl_item
+([sl_item::sl, 1]; [sl_item::index, 1])
+(<0>; <0>; [sl_item::sl, 2; lines, 2],[sl_item::index, 2])
+{
+  [sl_item::$tmp::return_value_sl_count$1, 1] r= sl_count([sl_item::sl, 1]);
+  [sl_item::$tmp::return_value_sl_count$2, 1] r= sl_count([sl_item::sl, 1]);
+
+}
+
+bsearch
+([bsearch::__key, 1]; [bsearch::__base, 1]; [bsearch::__nmemb, 1]; [bsearch::__size, 1]; [bsearch::__compar, 1])
+([bsearch::1::__p, 1]; <0>)
+{
+  [bsearch::1::__l, 1] := <0>;
+  [bsearch::1::__u, 1] := [bsearch::__nmemb, 1];
+  [bsearch::1::__idx, 1] := [bsearch::1::__l, 1],[bsearch::1::__u, 1];
+  [bsearch::1::__p, 1] := [bsearch::__base, 1],[bsearch::__size, 1],[bsearch::1::__idx, 1];
+  [bsearch::1::__comparison, 1] r= sl_strcmp([bsearch::__key, 1]; [bsearch::1::__p, 1]);
+  [bsearch::1::__comparison, 1] r= sl_strcasecmp([bsearch::__key, 1]; [bsearch::1::__p, 1]);
+  [bsearch::1::__comparison, 1] r= hash_comp_default([bsearch::__key, 1]; [bsearch::1::__p, 1]);
+  [bsearch::1::__u, 1] := [bsearch::1::__idx, 1];
+  [bsearch::1::__l, 1] := [bsearch::1::__idx, 1];
+
+}
+
+sl_casefind
+([sl_casefind::sl, 1]; [sl_casefind::str, 1])
+([sl_casefind::1::1::res, 2]; <0>; [sl_casefind::$tmp::return_value_sl_item$4, 1]; <0>)
+{
+  [sl_casefind::$tmp::return_value_sl_count$1, 1] r= sl_count([sl_casefind::sl, 1]);
+  [sl_casefind::$tmp::return_value_bsearch$2, 1] r= bsearch([sl_casefind::str, 0]; [sl_casefind::sl, 2; lines, 1]; [sl_casefind::$tmp::return_value_sl_count$1, 1]; <0>; [sl_strcasecmp, 0]);
+  [sl_casefind::1::1::res, 1] := [sl_casefind::$tmp::return_value_bsearch$2, 1];
+  [sl_casefind::1::i, 1] := <0>;
+  [sl_casefind::$tmp::return_value_sl_count$3, 1] r= sl_count([sl_casefind::sl, 1]);
+  [sl_casefind::$tmp::return_value_sl_item$5, 1] r= sl_item([sl_casefind::sl, 1]; [sl_casefind::1::i, 1]);
+  [sl_casefind::$tmp::return_value_sl_item$4, 1] r= sl_item([sl_casefind::sl, 1]; [sl_casefind::1::i, 1]);
+  [sl_casefind::1::i, 1] := [sl_casefind::1::i, 1];
+
+}
+
+fusesmb_cache_new_context
+([fusesmb_cache_new_context::cf, 1])
+([fusesmb_cache_new_context::$tmp::return_value_fusesmb_context$1, 1])
+{
+  [fusesmb_auth_fn_cfg, 1] := [fusesmb_cache_new_context::cf, 1];
+  [fusesmb_cache_new_context::$tmp::return_value_fusesmb_context$1, 1] r= fusesmb_context([fusesmb_cache_auth_fn, 0]);
+
+}
+
+sl_sort
+([sl_sort::sl, 1])
+()
+{
+  [sl_sort::$tmp::return_value_sl_count$1, 1] r= sl_count([sl_sort::sl, 1]);
+  [sl_sort::sl, 2; sorted, 1] := <0>;
+
+}
+
+sl_casesort
+([sl_casesort::sl, 1])
+()
+{
+  [sl_casesort::$tmp::return_value_sl_count$1, 1] r= sl_count([sl_casesort::sl, 1]);
+  [sl_casesort::sl, 2; sorted, 1] := <0>;
+
+}
+
+server_listing
+([server_listing::ctx, 1]; [server_listing::cache, 1]; [server_listing::wg, 1]; [server_listing::sv, 1]; [server_listing::ip, 1])
+(<0>; <0>; <0>)
+{
+  [server_listing::1::tmp_path, 1] := <0>;
+  [remove_function_pointers::tmp_return_val$7, 1] r= sl_strcmp([server_listing::ctx, 1]; [server_listing::1::tmp_path, 1]);
+  [server_listing::1::dir, 1] := [remove_function_pointers::tmp_return_val$7, 1];
+  [remove_function_pointers::tmp_return_val$8, 1] r= sl_strcasecmp([server_listing::ctx, 1]; [server_listing::1::tmp_path, 1]);
+  [server_listing::1::dir, 1] := [remove_function_pointers::tmp_return_val$8, 1];
+  [remove_function_pointers::tmp_return_val$9, 1] r= hash_comp_default([server_listing::ctx, 1]; [server_listing::1::tmp_path, 1]);
+  [server_listing::1::dir, 1] := [remove_function_pointers::tmp_return_val$9, 1];
+  <0> r= sl_strcmp([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= sl_strcasecmp([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= hash_comp_default([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= hnode_free([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  [remove_function_pointers::tmp_return_val$10, 1] r= sl_strcmp([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  [server_listing::1::share_dirent, 1] := [remove_function_pointers::tmp_return_val$10, 1];
+  [remove_function_pointers::tmp_return_val$11, 1] r= sl_strcasecmp([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  [server_listing::1::share_dirent, 1] := [remove_function_pointers::tmp_return_val$11, 1];
+  [remove_function_pointers::tmp_return_val$12, 1] r= hash_comp_default([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  [server_listing::1::share_dirent, 1] := [remove_function_pointers::tmp_return_val$12, 1];
+  [server_listing::$tmp::tmp_if_expr$1, 1] := <0>;
+  [server_listing::$tmp::tmp_if_expr$1, 1] := [server_listing::1::share_dirent, 2; namelen, 1];
+  [server_listing::$tmp::tmp_statement_expression$2, 1] := [server_listing::$tmp::return_value___builtin_strcmp$3, 1];
+  [server_listing::$tmp::tmp_if_expr$6, 1] := <0>;
+  [server_listing::$tmp::tmp_statement_expression$4, 1] := [server_listing::$tmp::return_value___builtin_strcmp$5, 1];
+  [server_listing::$tmp::tmp_if_expr$6, 1] := [server_listing::$tmp::tmp_statement_expression$4, 1];
+  [server_listing::1::4::len, 1] := [server_listing::$tmp::return_value_strlen$7, 1],[server_listing::$tmp::return_value_strlen$8, 1],[server_listing::$tmp::return_value_strlen$9, 1];
+  [server_listing::1::4::len$array_size0, 1] := [server_listing::1::4::len, 1];
+  [server_listing::$tmp::return_value_sl_add$10, 1] r= sl_add([server_listing::cache, 1]; [server_listing::1::4::tmp, 1]; <0>);
+  <0> r= sl_strcmp([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= sl_strcasecmp([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= hash_comp_default([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= hnode_free([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= sl_strcmp([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= sl_strcasecmp([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= hash_comp_default([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+  <0> r= hnode_free([server_listing::ctx, 1]; [server_listing::1::dir, 1]);
+
+}
+
+fusesmb_auth_fn
+([fusesmb_auth_fn::server, 1]; [fusesmb_auth_fn::share, 1]; [fusesmb_auth_fn::workgroup, 1]; [fusesmb_auth_fn::wgmaxlen, 1]; [fusesmb_auth_fn::username, 1]; [fusesmb_auth_fn::unmaxlen, 1]; [fusesmb_auth_fn::password, 1]; [fusesmb_auth_fn::pwmaxlen, 1])
+()
+{
+  [fusesmb_auth_fn::$tmp::tmp_if_expr$1, 1] := <0>;
+  [fusesmb_auth_fn::$tmp::tmp_if_expr$1, 1] := [fusesmb_auth_fn::server, 2];
+  [fusesmb_auth_fn::1::sv_section, 1] := <0>;
+  [fusesmb_auth_fn::$tmp::return_value_config_read_string$3, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; [fusesmb_auth_fn::1::sv_section, 1]; <0>; [fusesmb_auth_fn::1::un, 0]);
+  [fusesmb_auth_fn::$tmp::return_value_config_read_string$2, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; [fusesmb_auth_fn::1::sv_section, 1]; <0>; [fusesmb_auth_fn::1::pw, 0]);
+  [fusesmb_auth_fn::$tmp::return_value_config_read_string$5, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; [fusesmb_auth_fn::1::sv_section, 1]; <0>; [fusesmb_auth_fn::1::un, 0]);
+  [fusesmb_auth_fn::$tmp::return_value_config_read_string$4, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; [fusesmb_auth_fn::1::sv_section, 1]; <0>; [fusesmb_auth_fn::1::pw, 0]);
+  [fusesmb_auth_fn::$tmp::return_value_config_read_string$7, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; <0>; <0>; [fusesmb_auth_fn::1::un, 0]);
+  [fusesmb_auth_fn::$tmp::return_value_config_read_string$6, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; <0>; <0>; [fusesmb_auth_fn::1::pw, 0]);
+  [fusesmb_auth_fn::username, 1] := <0>;
+  [fusesmb_auth_fn::password, 1] := <0>;
+
+}
+
+workgroup_listing_thread
+([workgroup_listing_thread::args, 1])
+(<0>; <0>; <0>)
+{
+  [workgroup_listing_thread::1::wg, 1] := [workgroup_listing_thread::args, 1];
+  [workgroup_listing_thread::1::ip_cache, 1] r= hash_create(<0>; <0>; <0>);
+  [workgroup_listing_thread::1::servers, 1] r= sl_init();
+  [workgroup_listing_thread::1::ctx, 1] r= fusesmb_cache_new_context([cfg, 0]);
+  [workgroup_listing_thread::1::temp_path, 1] := <0>;
+  [remove_function_pointers::tmp_return_val$13, 1] r= sl_strcmp([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::temp_path, 1]);
+  [workgroup_listing_thread::1::dir, 1] := [remove_function_pointers::tmp_return_val$13, 1];
+  [remove_function_pointers::tmp_return_val$14, 1] r= sl_strcasecmp([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::temp_path, 1]);
+  [workgroup_listing_thread::1::dir, 1] := [remove_function_pointers::tmp_return_val$14, 1];
+  [remove_function_pointers::tmp_return_val$15, 1] r= hash_comp_default([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::temp_path, 1]);
+  [workgroup_listing_thread::1::dir, 1] := [remove_function_pointers::tmp_return_val$15, 1];
+  <0> r= sl_strcmp([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  <0> r= sl_strcasecmp([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  <0> r= hash_comp_default([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  <0> r= hnode_free([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  [remove_function_pointers::tmp_return_val$16, 1] r= sl_strcmp([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  [workgroup_listing_thread::1::server_dirent, 1] := [remove_function_pointers::tmp_return_val$16, 1];
+  [remove_function_pointers::tmp_return_val$17, 1] r= sl_strcasecmp([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  [workgroup_listing_thread::1::server_dirent, 1] := [remove_function_pointers::tmp_return_val$17, 1];
+  [remove_function_pointers::tmp_return_val$18, 1] r= hash_comp_default([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  [workgroup_listing_thread::1::server_dirent, 1] := [remove_function_pointers::tmp_return_val$18, 1];
+  [workgroup_listing_thread::$tmp::tmp_if_expr$1, 1] := <0>;
+  [workgroup_listing_thread::$tmp::tmp_if_expr$1, 1] := [workgroup_listing_thread::1::server_dirent, 2; smbc_type, 1];
+  [workgroup_listing_thread::$tmp::return_value_sl_add$2, 1] r= sl_add([workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::server_dirent, 2; name, 1]; <0>);
+  <0> r= sl_strcmp([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  <0> r= sl_strcasecmp([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  <0> r= hash_comp_default([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  <0> r= hnode_free([workgroup_listing_thread::1::ctx, 1]; [workgroup_listing_thread::1::dir, 1]);
+  <0> r= nmblookup([workgroup_listing_thread::1::wg, 1]; [workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::ip_cache, 1]);
+  <0> r= sl_casesort([workgroup_listing_thread::1::servers, 1]);
+  [workgroup_listing_thread::1::i, 1] := <0>;
+  [workgroup_listing_thread::$tmp::return_value_sl_count$3, 1] r= sl_count([workgroup_listing_thread::1::servers, 1]);
+  [workgroup_listing_thread::$tmp::return_value_sl_item$5, 1] r= sl_item([workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::i, 1]);
+  [workgroup_listing_thread::$tmp::return_value_sl_item$6, 1] r= sl_item([workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::i, 1]);
+  [workgroup_listing_thread::$tmp::tmp_statement_expression$4, 1] := [workgroup_listing_thread::$tmp::return_value___builtin_strcmp$7, 1];
+  [workgroup_listing_thread::$tmp::return_value_sl_item$8, 1] r= sl_item([workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::i, 1]);
+  [workgroup_listing_thread::$tmp::return_value_sl_find$9, 1] r= sl_find([opts, 1; ignore_servers, 1]; [workgroup_listing_thread::$tmp::return_value_sl_item$8, 1]);
+  [workgroup_listing_thread::1::4::sv, 1] := <0>;
+  [workgroup_listing_thread::$tmp::return_value_sl_item$10, 1] r= sl_item([workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::i, 1]);
+  [workgroup_listing_thread::1::4::ignore, 1] := <0>;
+  [workgroup_listing_thread::$tmp::return_value_config_read_bool$11, 1] r= config_read_bool([cfg, 0]; [workgroup_listing_thread::1::4::sv, 1]; <0>; [workgroup_listing_thread::1::4::ignore, 0]);
+  [workgroup_listing_thread::$tmp::return_value_sl_item$12, 1] r= sl_item([workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::i, 1]);
+  [workgroup_listing_thread::1::4::node, 1] r= hash_lookup([workgroup_listing_thread::1::ip_cache, 1]; [workgroup_listing_thread::$tmp::return_value_sl_item$12, 1]);
+  [workgroup_listing_thread::$tmp::return_value_sl_item$13, 1] r= sl_item([workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::i, 1]);
+  <0> r= server_listing([workgroup_listing_thread::1::ctx, 1]; [cache, 1]; [workgroup_listing_thread::1::wg, 1]; [workgroup_listing_thread::$tmp::return_value_sl_item$13, 1]; <0>);
+  [workgroup_listing_thread::$tmp::return_value_sl_item$14, 1] r= sl_item([workgroup_listing_thread::1::servers, 1]; [workgroup_listing_thread::1::i, 1]);
+  <0> r= server_listing([workgroup_listing_thread::1::ctx, 1]; [cache, 1]; [workgroup_listing_thread::1::wg, 1]; [workgroup_listing_thread::$tmp::return_value_sl_item$14, 1]; [workgroup_listing_thread::1::4::node, 2; hash_data, 1]);
+  [workgroup_listing_thread::1::i, 1] := [workgroup_listing_thread::1::i, 1];
+  <0> r= hash_scan_begin([workgroup_listing_thread::1::sc, 0]; [workgroup_listing_thread::1::ip_cache, 1]);
+  [workgroup_listing_thread::1::n, 1] r= hash_scan_next([workgroup_listing_thread::1::sc, 0]);
+  [workgroup_listing_thread::1::5::data, 1] := [workgroup_listing_thread::1::n, 2; hash_data, 1];
+  [workgroup_listing_thread::1::5::key, 1] := [workgroup_listing_thread::1::n, 2; hash_key, 1];
+  <0> r= hash_scan_delfree([workgroup_listing_thread::1::ip_cache, 1]; [workgroup_listing_thread::1::n, 1]);
+  <0> r= hash_destroy([workgroup_listing_thread::1::ip_cache, 1]);
+  <0> r= sl_free([workgroup_listing_thread::1::servers, 1]);
+
+}
+
+fusesmb_cache_auth_fn
+([fusesmb_cache_auth_fn::server, 1]; [fusesmb_cache_auth_fn::share, 1]; [fusesmb_cache_auth_fn::workgroup, 1]; [fusesmb_cache_auth_fn::wgmaxlen, 1]; [fusesmb_cache_auth_fn::username, 1]; [fusesmb_cache_auth_fn::unmaxlen, 1]; [fusesmb_cache_auth_fn::password, 1]; [fusesmb_cache_auth_fn::pwmaxlen, 1])
+()
+{
+  [fusesmb_cache_auth_fn::$tmp::tmp_if_expr$1, 1] := <0>;
+  [fusesmb_cache_auth_fn::$tmp::tmp_if_expr$1, 1] := [fusesmb_cache_auth_fn::server, 2];
+  <0> r= nmblookup$link1([fusesmb_cache_auth_fn::server, 1]; [fusesmb_cache_auth_fn::1::sv, 1]; <0>);
+  [fusesmb_cache_auth_fn::1::sv_section, 1] := <0>;
+  [fusesmb_cache_auth_fn::$tmp::return_value_config_read_string$3, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; [fusesmb_cache_auth_fn::1::sv_section, 1]; <0>; [fusesmb_cache_auth_fn::1::un, 0]);
+  [fusesmb_cache_auth_fn::$tmp::return_value_config_read_string$2, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; [fusesmb_cache_auth_fn::1::sv_section, 1]; <0>; [fusesmb_cache_auth_fn::1::pw, 0]);
+  [fusesmb_cache_auth_fn::$tmp::return_value_config_read_string$5, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; [fusesmb_cache_auth_fn::1::sv_section, 1]; <0>; [fusesmb_cache_auth_fn::1::un, 0]);
+  [fusesmb_cache_auth_fn::$tmp::return_value_config_read_string$4, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; [fusesmb_cache_auth_fn::1::sv_section, 1]; <0>; [fusesmb_cache_auth_fn::1::pw, 0]);
+  [fusesmb_cache_auth_fn::$tmp::return_value_config_read_string$7, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; <0>; <0>; [fusesmb_cache_auth_fn::1::un, 0]);
+  [fusesmb_cache_auth_fn::$tmp::return_value_config_read_string$6, 1] r= config_read_string([fusesmb_auth_fn_cfg, 1]; <0>; <0>; [fusesmb_cache_auth_fn::1::pw, 0]);
+  [fusesmb_cache_auth_fn::username, 1] := <0>;
+  [fusesmb_cache_auth_fn::password, 1] := <0>;
+
+}
+
+fusesmb_context
+([fusesmb_context::fn, 1])
+(<0>; [fusesmb_context::1::ctx, 1])
+{
+  [fusesmb_context::1::ctx, 2; callbacks, 1; auth_fn, 1] := [fusesmb_context::fn, 1];
+  [fusesmb_context::1::ctx, 2; timeout, 1] := <0>;
+  [fusesmb_context::1::ctx, 2; flags, 1] := [fusesmb_context::1::ctx, 2; flags, 1];
+
+}
+
+fusesmb_new_context
+([fusesmb_new_context::cf, 1]; [fusesmb_new_context::mutex, 1])
+([fusesmb_new_context::$tmp::return_value_fusesmb_context$1, 1])
+{
+  [fusesmb_auth_fn_cfg, 1] := [fusesmb_new_context::cf, 1];
+  [fusesmb_auth_fn_cfg_mutex, 1] := [fusesmb_new_context::mutex, 1];
+  [fusesmb_new_context::$tmp::return_value_fusesmb_context$1, 1] r= fusesmb_context([fusesmb_auth_fn, 0]);
+
+}
+
+config_read_string
+([config_read_string::cf, 1]; [config_read_string::section, 1]; [config_read_string::key, 1]; [config_read_string::value, 1])
+(<0>; <0>; <0>; <0>; <0>)
+{
+  [config_read_string::1::i$array_size0, 1] := [config_read_string::$tmp::return_value_strlen$1, 1];
+  [config_read_string::1::cmp_section$array_size0, 1] := [config_read_string::$tmp::return_value_strlen$2, 1];
+  [config_read_string::1::section_found, 1] := <0>;
+  [config_read_string::1::i, 1] := <0>;
+  [config_read_string::$tmp::return_value_sl_count$3, 1] r= sl_count([config_read_string::cf, 2; lines, 1]);
+  [config_read_string::$tmp::return_value_sl_item$4, 1] r= sl_item([config_read_string::cf, 2; lines, 1]; [config_read_string::1::i, 1]);
+  [config_read_string::1::section_found, 1] := <0>;
+  [config_read_string::1::i, 1] := [config_read_string::1::i, 1];
+  [config_read_string::$tmp::return_value_sl_count$14, 1] r= sl_count([config_read_string::cf, 2; lines, 1]);
+  [config_read_string::$tmp::return_value_sl_item$6, 1] r= sl_item([config_read_string::cf, 2; lines, 1]; [config_read_string::1::i, 1]);
+  [config_read_string::$tmp::return_value_sl_item$11, 1] r= sl_item([config_read_string::cf, 2; lines, 1]; [config_read_string::1::i, 1]);
+  [config_read_string::$tmp::return_value_sl_item$8, 1] r= sl_item([config_read_string::cf, 2; lines, 1]; [config_read_string::1::i, 1]);
+  [config_read_string::1::1::2::2::retval, 1] := [config_read_string::1::1::2::2::retval, 1];
+  [config_read_string::value, 2] := [config_read_string::$tmp::return_value___strdup$9, 1];
+  [config_read_string::1::i, 1] := [config_read_string::1::i, 1];
+
+}
+
+sl_count
+([sl_count::sl, 1])
+([sl_count::sl, 2; numlines, 1])
+{
+
+}
+
+config_init
+([config_init::cf, 1]; [config_init::file, 1])
+(<0>; <0>; <0>)
+{
+  [config_init::$tmp::return_value_stat$1, 1] r= stat$link1([config_init::file, 1]; [config_init::1::st, 0]);
+  [config_init::cf, 2; mtime, 1] := [config_init::1::st, 1; st_mtim, 1; tv_sec, 1];
+  [config_init::cf, 2; lines, 1] r= sl_init();
+  <0> r= config_read_file([config_init::cf, 1]);
+
+}
+
+nmblookup$link1
+([nmblookup::ip_server, 1]; [nmblookup::output, 1]; [nmblookup::outputsize, 1])
+(<0>; <0>)
+{
+  [nmblookup::1::ipcmd, 1] := <0>;
+  [nmblookup::1::1::start, 1] := [nmblookup::1::1::buf$link1, 1];
+  [nmblookup::1::1::2::tmp$link1, 1] := [nmblookup::1::1::2::tmp$link1, 1];
+  [nmblookup::1::1::2::end, 2] := <0>;
+  [nmblookup::1::1::4::sep, 1] := [nmblookup::1::1::buf$link1, 1];
+  [nmblookup::1::1::4::sep, 2] := <0>;
+  [nmblookup::1::1::start, 1] := [nmblookup::1::1::start, 1];
+  [nmblookup::1::1::4::sep, 2] := <0>;
+  [nmblookup::1::1::4::sep, 1] := [nmblookup::1::1::4::sep, 1];
+
+}
+
+config_read_int
+([config_read_int::cf, 1]; [config_read_int::section, 1]; [config_read_int::key, 1]; [config_read_int::value, 1])
+(<0>; <0>; <0>)
+{
+  [config_read_int::$tmp::return_value_config_read_string$2, 1] r= config_read_string([config_read_int::cf, 1]; [config_read_int::section, 1]; [config_read_int::key, 1]; [config_read_int::1::str, 0]);
+  [config_read_int::1::1::ret, 1] := [config_read_int::$tmp::return_value_strtol$1, 1];
+  [config_read_int::value, 2] := [config_read_int::1::1::ret, 1];
+
+}
+
+config_read_bool
+([config_read_bool::cf, 1]; [config_read_bool::section, 1]; [config_read_bool::key, 1]; [config_read_bool::value, 1])
+(<0>; <0>; <0>)
+{
+  [config_read_bool::$tmp::return_value_config_read_string$9, 1] r= config_read_string([config_read_bool::cf, 1]; [config_read_bool::section, 1]; [config_read_bool::key, 1]; [config_read_bool::1::str, 0]);
+  [config_read_bool::$tmp::tmp_if_expr$4, 1] := <0>;
+  [config_read_bool::$tmp::tmp_statement_expression$2, 1] := [config_read_bool::$tmp::return_value___builtin_strcmp$3, 1];
+  [config_read_bool::$tmp::tmp_if_expr$4, 1] := [config_read_bool::$tmp::tmp_statement_expression$2, 1];
+  [config_read_bool::value, 2] := <0>;
+  [config_read_bool::$tmp::tmp_if_expr$8, 1] := <0>;
+  [config_read_bool::$tmp::tmp_statement_expression$6, 1] := [config_read_bool::$tmp::return_value___builtin_strcmp$7, 1];
+  [config_read_bool::$tmp::tmp_if_expr$8, 1] := [config_read_bool::$tmp::tmp_statement_expression$6, 1];
+  [config_read_bool::value, 2] := <0>;
+
+}
+
+config_read_stringlist
+([config_read_stringlist::cf, 1]; [config_read_stringlist::section, 1]; [config_read_stringlist::key, 1]; [config_read_stringlist::value, 1]; [config_read_stringlist::sep, 1])
+(<0>; <0>)
+{
+  [config_read_stringlist::$tmp::return_value_config_read_string$2, 1] r= config_read_string([config_read_stringlist::cf, 1]; [config_read_stringlist::section, 1]; [config_read_stringlist::key, 1]; [config_read_stringlist::1::str, 0]);
+  [config_read_stringlist::value, 2] r= sl_init();
+  [config_read_stringlist::1::1::start, 1] := [config_read_stringlist::1::str, 1];
+  [config_read_stringlist::1::1::next, 2] := <0>;
+  [config_read_stringlist::1::1::next, 1] := [config_read_stringlist::1::1::next, 1];
+  [config_read_stringlist::1::1::next, 2] := <0>;
+  [config_read_stringlist::1::1::next, 1] := [config_read_stringlist::1::1::next, 1];
+  [config_read_stringlist::1::1::1::stripped, 1] r= strip_whitespace([config_read_stringlist::1::1::start, 1]);
+  <0> r= sl_add([config_read_stringlist::value, 2]; [config_read_stringlist::1::1::1::stripped, 1]; <0>);
+  [config_read_stringlist::1::1::start, 1] := [config_read_stringlist::1::1::next, 1];
+  [config_read_stringlist::1::1::2::stripped, 1] r= strip_whitespace([config_read_stringlist::1::1::start, 1]);
+  <0> r= sl_add([config_read_stringlist::value, 2]; [config_read_stringlist::1::1::2::stripped, 1]; <0>);
+
+}
+
+config_read_section_keys
+([config_read_section_keys::cf, 1]; [config_read_section_keys::section, 1]; [config_read_section_keys::value, 1])
+(<0>; <0>; <0>)
+{
+  [config_read_section_keys::1::i$array_size0, 1] := [config_read_section_keys::$tmp::return_value_strlen$1, 1];
+  [config_read_section_keys::1::section_found, 1] := <0>;
+  [config_read_section_keys::value, 2] r= sl_init();
+  [config_read_section_keys::1::i, 1] := <0>;
+  [config_read_section_keys::$tmp::return_value_sl_count$2, 1] r= sl_count([config_read_section_keys::cf, 2; lines, 1]);
+  [config_read_section_keys::$tmp::return_value_sl_item$3, 1] r= sl_item([config_read_section_keys::cf, 2; lines, 1]; [config_read_section_keys::1::i, 1]);
+  [config_read_section_keys::1::section_found, 1] := <0>;
+  [config_read_section_keys::1::i, 1] := [config_read_section_keys::1::i, 1];
+  [config_read_section_keys::$tmp::return_value_sl_item$5, 1] r= sl_item([config_read_section_keys::cf, 2; lines, 1]; [config_read_section_keys::1::i, 1]);
+  [config_read_section_keys::$tmp::return_value_sl_item$7, 1] r= sl_item([config_read_section_keys::cf, 2; lines, 1]; [config_read_section_keys::1::i, 1]);
+  [config_read_section_keys::1::1::2::sep, 2] := <0>;
+  [config_read_section_keys::$tmp::return_value_sl_add$8, 1] r= sl_add([config_read_section_keys::value, 2]; [config_read_section_keys::1::1::2::buf, 1]; <0>);
+  [config_read_section_keys::1::i, 1] := [config_read_section_keys::1::i, 1];
+  [config_read_section_keys::$tmp::return_value_sl_count$10, 1] r= sl_count([config_read_section_keys::value, 2]);
+  <0> r= sl_free([config_read_section_keys::value, 2]);
+  [config_read_section_keys::value, 2] := <0>;
+
+}
+
+options_read
+([options_read::cfg, 1]; [options_read::opt, 1])
+()
+{
+  [options_read::opt, 2; ignore_servers, 1] := <0>;
+  [options_read::$tmp::return_value_config_read_stringlist$1, 1] r= config_read_stringlist([options_read::cfg, 1]; <0>; <0>; [options_read::opt, 2; ignore_servers, 0]; <0>);
+  [options_read::opt, 2; ignore_servers, 1] := <0>;
+  [options_read::opt, 2; ignore_workgroups, 1] := <0>;
+  [options_read::$tmp::return_value_config_read_stringlist$2, 1] r= config_read_stringlist([options_read::cfg, 1]; <0>; <0>; [options_read::opt, 2; ignore_workgroups, 0]; <0>);
+  [options_read::opt, 2; ignore_workgroups, 1] := <0>;
+
+}
+
+strip_whitespace_check_comment
+([strip_whitespace_check_comment::str, 1])
+(<0>; [strip_whitespace_check_comment::1::start, 1])
+{
+  [strip_whitespace_check_comment::1::start, 1] := [strip_whitespace_check_comment::str, 1];
+  [strip_whitespace_check_comment::1::end, 1] := [strip_whitespace_check_comment::$tmp::return_value_strlen$1, 1],[strip_whitespace_check_comment::1::start, 1];
+  [strip_whitespace_check_comment::1::start, 1] := [strip_whitespace_check_comment::1::start, 1];
+  [strip_whitespace_check_comment::1::end, 2] := <0>;
+  [strip_whitespace_check_comment::1::end, 1] := [strip_whitespace_check_comment::1::end, 1];
+  [strip_whitespace_check_comment::$tmp::tmp_if_expr$3, 1] := <0>;
+  [strip_whitespace_check_comment::$tmp::tmp_if_expr$3, 1] := [strip_whitespace_check_comment::1::start, 2];
+  [strip_whitespace_check_comment::$tmp::tmp_if_expr$4, 1] := <0>;
+  [strip_whitespace_check_comment::$tmp::tmp_if_expr$4, 1] := [strip_whitespace_check_comment::1::start, 2];
+
+}
+
+strip_whitespace
+([strip_whitespace::str, 1])
+(<0>; [strip_whitespace::1::start, 1])
+{
+  [strip_whitespace::1::start, 1] := [strip_whitespace::str, 1];
+  [strip_whitespace::1::end, 1] := [strip_whitespace::$tmp::return_value_strlen$1, 1],[strip_whitespace::1::start, 1];
+  [strip_whitespace::1::start, 1] := [strip_whitespace::1::start, 1];
+  [strip_whitespace::1::end, 2] := <0>;
+  [strip_whitespace::1::end, 1] := [strip_whitespace::1::end, 1];
+
+}
+
+config_read_file
+([config_read_file::cf, 1])
+(<0>; <0>)
+{
+  <0> r= sl_clear([config_read_file::cf, 2; lines, 1]);
+  [config_read_file::1::1::stripped_string, 1] r= strip_whitespace_check_comment([config_read_file::1::buf, 1]);
+  [config_read_file::1::1::stripped_string, 1] := [config_read_file::1::1::stripped_string, 1];
+  [config_read_file::1::1::stripped_string, 1] := [config_read_file::1::1::stripped_string, 1];
+  [config_read_file::1::1::1::end, 1] := [config_read_file::$tmp::return_value_strlen$3, 1],[config_read_file::1::1::stripped_string, 1];
+  [config_read_file::1::1::1::end, 2] := <0>;
+  [config_read_file::1::1::1::end, 1] := [config_read_file::1::1::1::end, 1];
+  [config_read_file::$tmp::return_value_sl_add$4, 1] r= sl_add([config_read_file::cf, 2; lines, 1]; [config_read_file::1::1::1::section_string, 1]; <0>);
+  [config_read_file::1::1::2::isequal, 2] := <0>;
+  [config_read_file::1::1::2::isequal, 1] := [config_read_file::1::1::2::isequal, 1];
+  [config_read_file::1::1::2::key, 1] r= strip_whitespace([config_read_file::1::1::stripped_string, 1]);
+  [config_read_file::1::1::2::value, 1] r= strip_whitespace([config_read_file::1::1::2::isequal, 1]);
+  [config_read_file::$tmp::return_value_sl_add$5, 1] r= sl_add([config_read_file::cf, 2; lines, 1]; [config_read_file::1::1::2::value_string, 1]; <0>);
+
+}
+
+config_free
+([config_free::cf, 1])
+()
+{
+  <0> r= sl_free([config_free::cf, 2; lines, 1]);
+
+}
+
+config_reload_ifneeded
+([config_reload_ifneeded::cf, 1])
+(<0>; <0>; [config_reload_ifneeded::$tmp::return_value_config_read_file$2, 1])
+{
+  [config_reload_ifneeded::$tmp::return_value_stat$1, 1] r= stat$link1([config_reload_ifneeded::cf, 2; file, 1]; [config_reload_ifneeded::1::st, 0]);
+  [config_reload_ifneeded::cf, 2; mtime, 1] := [config_reload_ifneeded::1::st, 1; st_mtim, 1; tv_sec, 1];
+  [config_reload_ifneeded::$tmp::return_value_config_read_file$2, 1] r= config_read_file([config_reload_ifneeded::cf, 1]);
+
+}
+
+config_has_section
+([config_has_section::cf, 1]; [config_has_section::section, 1])
+(<0>; <0>)
+{
+  [config_has_section$array_size0, 1] := [config_has_section::$tmp::return_value_strlen$1, 1];
+  [config_has_section::$tmp::return_value_sl_find$2, 1] r= sl_find([config_has_section::cf, 2; lines, 1]; [config_has_section::1::buf, 1]);
+
+}
+
+hash_scan_begin
+([hash_scan_begin::scan, 1]; [hash_scan_begin::hash, 1])
+()
+{
+  [hash_scan_begin::1::hash_nchains, 1] := [hash_scan_begin::hash, 2; hash_nchains, 1];
+  [hash_scan_begin::scan, 2; hash_table, 1] := [hash_scan_begin::hash, 1];
+  [hash_scan_begin::1::hash_chain, 1] := <0>;
+  [hash_scan_begin::$tmp::tmp_if_expr$1, 1] := [hash_scan_begin::hash, 2; hash_table, 2],[hash_scan_begin::1::hash_chain, 2];
+  [hash_scan_begin::$tmp::tmp_if_expr$1, 1] := <0>;
+  [hash_scan_begin::1::hash_chain, 1] := [hash_scan_begin::1::hash_chain, 1];
+  [hash_scan_begin::scan, 2; hash_chain, 1] := [hash_scan_begin::1::hash_chain, 1];
+  [hash_scan_begin::scan, 2; hash_next, 1] := [hash_scan_begin::hash, 2; hash_table, 2],[hash_scan_begin::1::hash_chain, 2];
+  [hash_scan_begin::scan, 2; hash_next, 1] := <0>;
+
+}
+
+hash_scan_next
+([hash_scan_next::scan, 1])
+([hash_scan_next::1::hash_next, 1])
+{
+  [hash_scan_next::1::hash_next, 1] := [hash_scan_next::scan, 2; hash_next, 1];
+  [hash_scan_next::1::hash, 1] := [hash_scan_next::scan, 2; hash_table, 1];
+  [hash_scan_next::1::hash_chain, 1] := [hash_scan_next::scan, 2; hash_chain, 1];
+  [hash_scan_next::1::hash_nchains, 1] := [hash_scan_next::1::hash, 2; hash_nchains, 1];
+  [hash_scan_next::scan, 2; hash_next, 1] := [hash_scan_next::1::hash_next, 2; hash_next, 1];
+  [hash_scan_next::1::hash_chain, 1] := [hash_scan_next::1::hash_chain, 1];
+  [hash_scan_next::scan, 2; hash_chain, 1] := [hash_scan_next::1::hash_chain, 1];
+  [hash_scan_next::scan, 2; hash_next, 1] := [hash_scan_next::1::hash, 2; hash_table, 2],[hash_scan_next::1::hash_chain, 2];
+  [hash_scan_next::scan, 2; hash_next, 1] := <0>;
+
+}
+
+hash_insert
+([hash_insert::hash, 1]; [hash_insert::node, 1]; [hash_insert::hash_key, 1])
+()
+{
+  [hash_insert::$tmp::return_value_hash_lookup$1, 1] r= hash_lookup([hash_insert::hash, 1]; [hash_insert::hash_key, 1]);
+  <0> r= grow_table([hash_insert::hash, 1]);
+  [hash_insert::1::hash_hkey, 1] r= hash_fun_default([hash_insert::hash_key, 1]);
+  [hash_insert::1::hash_chain, 1] := [hash_insert::hash, 2; hash_mask, 1],[hash_insert::1::hash_hkey, 1];
+  [hash_insert::node, 2; hash_key, 1] := [hash_insert::hash_key, 1];
+  [hash_insert::node, 2; hash_hkey, 1] := [hash_insert::1::hash_hkey, 1];
+  [hash_insert::node, 2; hash_next, 1] := [hash_insert::hash, 2; hash_table, 2],[hash_insert::1::hash_chain, 2];
+  [hash_insert::hash, 2; hash_table, 2],[hash_insert::1::hash_chain, 2] := [hash_insert::node, 1];
+  [hash_insert::hash, 2; hash_nodecount, 1] := [hash_insert::hash, 2; hash_nodecount, 1];
+  [hash_insert::$tmp::return_value_hash_verify$2, 1] r= hash_verify([hash_insert::hash, 1]);
+
+}
+
+hash_lookup
+([hash_lookup::hash, 1]; [hash_lookup::hash_key, 1])
+([hash_lookup::1::nptr, 1]; <0>)
+{
+  [hash_lookup::1::hash_hkey, 1] r= hash_fun_default([hash_lookup::hash_key, 1]);
+  [hash_lookup::1::hash_chain, 1] := [hash_lookup::hash, 2; hash_mask, 1],[hash_lookup::1::hash_hkey, 1];
+  [hash_lookup::1::nptr, 1] := [hash_lookup::hash, 2; hash_table, 2],[hash_lookup::1::hash_chain, 2];
+  [hash_lookup::$tmp::return_value, 1] r= sl_strcmp([hash_lookup::1::nptr, 2; hash_key, 1]; [hash_lookup::hash_key, 1]);
+  [hash_lookup::$tmp::return_value, 1] r= sl_strcasecmp([hash_lookup::1::nptr, 2; hash_key, 1]; [hash_lookup::hash_key, 1]);
+  [hash_lookup::$tmp::return_value, 1] r= hash_comp_default([hash_lookup::1::nptr, 2; hash_key, 1]; [hash_lookup::hash_key, 1]);
+  [hash_lookup::1::nptr, 1] := [hash_lookup::1::nptr, 2; hash_next, 1];
+
+}
+
+hash_delete
+([hash_delete::hash, 1]; [hash_delete::node, 1])
+([hash_delete::node, 1])
+{
+  [hash_delete::$tmp::return_value_hash_lookup$1, 1] r= hash_lookup([hash_delete::hash, 1]; [hash_delete::node, 2; hash_key, 1]);
+  <0> r= shrink_table([hash_delete::hash, 1]);
+  [hash_delete::1::hash_chain, 1] := [hash_delete::hash, 2; hash_mask, 1],[hash_delete::node, 2; hash_hkey, 1];
+  [hash_delete::1::hptr, 1] := [hash_delete::hash, 2; hash_table, 2],[hash_delete::1::hash_chain, 2];
+  [hash_delete::hash, 2; hash_table, 2],[hash_delete::1::hash_chain, 2] := [hash_delete::node, 2; hash_next, 1];
+  [hash_delete::1::hptr, 1] := [hash_delete::1::hptr, 2; hash_next, 1];
+  [hash_delete::1::hptr, 2; hash_next, 1] := [hash_delete::node, 2; hash_next, 1];
+  [hash_delete::hash, 2; hash_nodecount, 1] := [hash_delete::hash, 2; hash_nodecount, 1];
+  [hash_delete::$tmp::return_value_hash_verify$2, 1] r= hash_verify([hash_delete::hash, 1]);
+  [hash_delete::node, 2; hash_next, 1] := <0>;
+
+}
+
+hash_alloc_insert
+([hash_alloc_insert::hash, 1]; [hash_alloc_insert::hash_key, 1]; [hash_alloc_insert::hash_data, 1])
+(<0>; <0>)
+{
+  [remove_function_pointers::tmp_return_val$19, 1] r= workgroup_listing_thread([hash_alloc_insert::hash, 2; hash_context, 1]);
+  [hash_alloc_insert::1::node, 1] := [remove_function_pointers::tmp_return_val$19, 1];
+  [hash_alloc_insert::1::node, 1] r= hnode_alloc([hash_alloc_insert::hash, 2; hash_context, 1]);
+  <0> r= hnode_init([hash_alloc_insert::1::node, 1]; [hash_alloc_insert::hash_data, 1]);
+  <0> r= hash_insert([hash_alloc_insert::hash, 1]; [hash_alloc_insert::1::node, 1]; [hash_alloc_insert::hash_key, 1]);
+
+}
+
+hash_scan_delete
+([hash_scan_delete::hash, 1]; [hash_scan_delete::node, 1])
+([hash_scan_delete::node, 1])
+{
+  [hash_scan_delete::$tmp::return_value_hash_lookup$1, 1] r= hash_lookup([hash_scan_delete::hash, 1]; [hash_scan_delete::node, 2; hash_key, 1]);
+  [hash_scan_delete::1::hash_chain, 1] := [hash_scan_delete::hash, 2; hash_mask, 1],[hash_scan_delete::node, 2; hash_hkey, 1];
+  [hash_scan_delete::1::hptr, 1] := [hash_scan_delete::hash, 2; hash_table, 2],[hash_scan_delete::1::hash_chain, 2];
+  [hash_scan_delete::hash, 2; hash_table, 2],[hash_scan_delete::1::hash_chain, 2] := [hash_scan_delete::node, 2; hash_next, 1];
+  [hash_scan_delete::1::hptr, 1] := [hash_scan_delete::1::hptr, 2; hash_next, 1];
+  [hash_scan_delete::1::hptr, 2; hash_next, 1] := [hash_scan_delete::node, 2; hash_next, 1];
+  [hash_scan_delete::hash, 2; hash_nodecount, 1] := [hash_scan_delete::hash, 2; hash_nodecount, 1];
+  [hash_scan_delete::$tmp::return_value_hash_verify$2, 1] r= hash_verify([hash_scan_delete::hash, 1]);
+  [hash_scan_delete::node, 2; hash_next, 1] := <0>;
+
+}
+
+hash_verify
+([hash_verify::hash, 1])
+(<0>; <0>; <0>; <0>; <0>; <0>)
+{
+  [hash_verify::1::count, 1] := <0>;
+  [hash_verify::$tmp::return_value_is_power_of_two$1, 1] r= is_power_of_two([hash_verify::hash, 2; hash_highmark, 1]);
+  [hash_verify::$tmp::return_value_is_power_of_two$2, 1] r= is_power_of_two([hash_verify::hash, 2; hash_lowmark, 1]);
+  [hash_verify::1::hash_chain, 1] := <0>;
+  [hash_verify::1::hptr, 1] := [hash_verify::hash, 2; hash_table, 2],[hash_verify::1::hash_chain, 2];
+  [hash_verify::1::count, 1] := [hash_verify::1::count, 1];
+  [hash_verify::1::hptr, 1] := [hash_verify::1::hptr, 2; hash_next, 1];
+  [hash_verify::1::hash_chain, 1] := [hash_verify::1::hash_chain, 1];
+
+}
+
+hnode_create
+([hnode_create::hash_data, 1])
+([hnode_create::1::node, 1])
+{
+  [hnode_create::1::node, 1] := [hnode_create::$tmp::return_value_malloc$1, 1];
+  [hnode_create::1::node, 2; hash_data, 1] := [hnode_create::hash_data, 1];
+  [hnode_create::1::node, 2; hash_next, 1] := <0>;
+
+}
+
+hash_fun_default
+([hash_fun_default::hash_key, 1])
+([hash_fun_default::1::acc, 1])
+{
+  [hash_fun_default::1::str, 1] := [hash_fun_default::hash_key, 1];
+  [hash_fun_default::1::acc, 1] := <0>;
+  [hash_fun_default::1::acc, 1] := [hash_fun_default::1::randbox, 2],[hash_fun_default::1::str, 3],[hash_fun_default::1::acc, 1],[hash_fun_default::1::acc, 2];
+  [hash_fun_default::1::acc, 1] := [hash_fun_default::1::acc, 1];
+  [hash_fun_default::1::acc, 1] := [hash_fun_default::1::acc, 1];
+  [hash_fun_default::$tmp::tmp_post$1, 1] := [hash_fun_default::1::str, 1];
+  [hash_fun_default::1::str, 1] := [hash_fun_default::1::str, 1];
+  [hash_fun_default::1::acc, 1] := [hash_fun_default::1::randbox, 2],[hash_fun_default::1::acc, 1],[hash_fun_default::1::acc, 2],[hash_fun_default::$tmp::tmp_post$1, 3];
+  [hash_fun_default::1::acc, 1] := [hash_fun_default::1::acc, 1];
+  [hash_fun_default::1::acc, 1] := [hash_fun_default::1::acc, 1];
+
+}
+
+stat$link1
+([stat::__path$link1, 1]; [stat::__statbuf$link1, 1])
+([stat::$tmp::return_value___xstat$1$link1, 1])
+{
+
+}
+
+hash_comp_default
+([hash_comp_default::key1, 1]; [hash_comp_default::key2, 1])
+([hash_comp_default::$tmp::tmp_statement_expression$1, 1])
+{
+  [hash_comp_default::$tmp::tmp_statement_expression$1, 1] := [hash_comp_default::$tmp::return_value___builtin_strcmp$2, 1];
+
+}
+
+hash_create
+([hash_create::hash_maxcount, 1]; [hash_create::compfun, 1]; [hash_create::hashfun, 1])
+([hash_create::1::hash, 1]; <0>)
+{
+  <0> r= compute_bits();
+  [hash_create::1::hash, 1] := [hash_create::$tmp::return_value_malloc$1, 1];
+  [hash_create::1::hash, 2; hash_table, 1] := [hash_create::$tmp::return_value_malloc$2, 1];
+  [hash_create::1::hash, 2; hash_nchains, 1] := <0>;
+  [hash_create::1::hash, 2; hash_highmark, 1] := <0>;
+  [hash_create::1::hash, 2; hash_lowmark, 1] := <0>;
+  [hash_create::1::hash, 2; hash_nodecount, 1] := <0>;
+  [hash_create::1::hash, 2; hash_maxcount, 1] := [hash_create::hash_maxcount, 1];
+  [hash_create::1::hash, 2; hash_compare, 1] := [hash_comp_default, 0],[hash_create::compfun, 1];
+  [hash_create::1::hash, 2; hash_function, 1] := [hash_fun_default, 0],[hash_create::hashfun, 1];
+  [hash_create::1::hash, 2; hash_allocnode, 1] := [hnode_alloc, 0];
+  [hash_create::1::hash, 2; hash_freenode, 1] := [hnode_free, 0];
+  [hash_create::1::hash, 2; hash_context, 1] := <0>;
+  [hash_create::1::hash, 2; hash_mask, 1] := <0>;
+  [hash_create::1::hash, 2; hash_dynamic, 1] := <0>;
+  <0> r= clear_table([hash_create::1::hash, 1]);
+  [hash_create::$tmp::return_value_hash_verify$3, 1] r= hash_verify([hash_create::1::hash, 1]);
+
+}
+
+hash_init
+([hash_init::hash, 1]; [hash_init::hash_maxcount, 1]; [hash_init::compfun, 1]; [hash_init::hashfun, 1]; [hash_init::hash_table, 1]; [hash_init::hash_nchains, 1])
+([hash_init::hash, 1])
+{
+  <0> r= compute_bits();
+  [hash_init::$tmp::return_value_is_power_of_two$1, 1] r= is_power_of_two([hash_init::hash_nchains, 1]);
+  [hash_init::hash, 2; hash_table, 1] := [hash_init::hash_table, 1];
+  [hash_init::hash, 2; hash_nchains, 1] := [hash_init::hash_nchains, 1];
+  [hash_init::hash, 2; hash_nodecount, 1] := <0>;
+  [hash_init::hash, 2; hash_maxcount, 1] := [hash_init::hash_maxcount, 1];
+  [hash_init::hash, 2; hash_compare, 1] := [hash_init::compfun, 1],[hash_comp_default, 0];
+  [hash_init::hash, 2; hash_function, 1] := [hash_init::hashfun, 1],[hash_fun_default, 0];
+  [hash_init::hash, 2; hash_dynamic, 1] := <0>;
+  [hash_init::hash, 2; hash_mask, 1] r= compute_mask([hash_init::hash_nchains, 1]);
+  <0> r= clear_table([hash_init::hash, 1]);
+  [hash_init::$tmp::return_value_hash_verify$2, 1] r= hash_verify([hash_init::hash, 1]);
+
+}
+
+hash_set_allocator
+([hash_set_allocator::hash, 1]; [hash_set_allocator::al, 1]; [hash_set_allocator::fr, 1]; [hash_set_allocator::hash_context, 1])
+()
+{
+  [hash_set_allocator::hash, 2; hash_allocnode, 1] := [hash_set_allocator::al, 1],[hnode_alloc, 0];
+  [hash_set_allocator::hash, 2; hash_freenode, 1] := [hash_set_allocator::fr, 1],[hnode_free, 0];
+  [hash_set_allocator::hash, 2; hash_context, 1] := [hash_set_allocator::hash_context, 1];
+
+}
+
+hnode_alloc
+([hnode_alloc::hash_context, 1])
+([hnode_alloc::$tmp::return_value_malloc$1, 1])
+{
+
+}
+
+hash_free_nodes
+([hash_free_nodes::hash, 1])
+()
+{
+  <0> r= hash_scan_begin([hash_free_nodes::1::hs, 0]; [hash_free_nodes::hash, 1]);
+  [hash_free_nodes::1::node, 1] r= hash_scan_next([hash_free_nodes::1::hs, 0]);
+  <0> r= hash_scan_delete([hash_free_nodes::hash, 1]; [hash_free_nodes::1::node, 1]);
+  <0> r= sl_strcmp([hash_free_nodes::1::node, 1]; [hash_free_nodes::hash, 2; hash_context, 1]);
+  <0> r= sl_strcasecmp([hash_free_nodes::1::node, 1]; [hash_free_nodes::hash, 2; hash_context, 1]);
+  <0> r= hash_comp_default([hash_free_nodes::1::node, 1]; [hash_free_nodes::hash, 2; hash_context, 1]);
+  <0> r= hnode_free([hash_free_nodes::1::node, 1]; [hash_free_nodes::hash, 2; hash_context, 1]);
+  [hash_free_nodes::hash, 2; hash_nodecount, 1] := <0>;
+  <0> r= clear_table([hash_free_nodes::hash, 1]);
+
+}
+
+hash_free
+([hash_free::hash, 1])
+()
+{
+  <0> r= hash_free_nodes([hash_free::hash, 1]);
+  <0> r= hash_destroy([hash_free::hash, 1]);
+
+}
+
+hash_delete_free
+([hash_delete_free::hash, 1]; [hash_delete_free::node, 1])
+()
+{
+  <0> r= hash_delete([hash_delete_free::hash, 1]; [hash_delete_free::node, 1]);
+  <0> r= sl_strcmp([hash_delete_free::node, 1]; [hash_delete_free::hash, 2; hash_context, 1]);
+  <0> r= sl_strcasecmp([hash_delete_free::node, 1]; [hash_delete_free::hash, 2; hash_context, 1]);
+  <0> r= hash_comp_default([hash_delete_free::node, 1]; [hash_delete_free::hash, 2; hash_context, 1]);
+  <0> r= hnode_free([hash_delete_free::node, 1]; [hash_delete_free::hash, 2; hash_context, 1]);
+
+}
+
+compute_mask
+([compute_mask::size, 1])
+([compute_mask::size, 1])
+{
+  [compute_mask::$tmp::return_value_is_power_of_two$1, 1] r= is_power_of_two([compute_mask::size, 1]);
+
+}
+
+hnode_put
+([hnode_put::node, 1]; [hnode_put::hash_data, 1])
+()
+{
+  [hnode_put::node, 2; hash_data, 1] := [hnode_put::hash_data, 1];
+
+}
+
+hnode_get
+([hnode_get::node, 1])
+([hnode_get::node, 2; hash_data, 1])
+{
+
+}
+
+hnode_getkey
+([hnode_getkey::node, 1])
+([hnode_getkey::node, 2; hash_key, 1])
+{
+
+}
+
+hash_count
+([hash_count::hash, 1])
+([hash_count::hash, 2; hash_nodecount, 1])
+{
+
+}
+
+grow_table
+([grow_table::hash, 1])
+()
+{
+  [grow_table::1::newtable, 1] := [grow_table::$tmp::return_value_realloc$1, 1];
+  [grow_table::1::1::hash_mask, 1] := [grow_table::hash, 2; hash_mask, 1];
+  [grow_table::1::1::exposed_bit, 1] := [grow_table::hash, 2; hash_mask, 1],[grow_table::1::1::hash_mask, 1];
+  [grow_table::1::1::hash_chain, 1] := <0>;
+  [grow_table::1::1::1::low_chain, 1] := <0>;
+  [grow_table::1::1::1::high_chain, 1] := <0>;
+  [grow_table::1::1::1::hptr, 1] := [grow_table::1::newtable, 2],[grow_table::1::1::hash_chain, 2];
+  [grow_table::1::1::1::hash_next, 1] := [grow_table::1::1::1::hptr, 2; hash_next, 1];
+  [grow_table::1::1::1::hptr, 2; hash_next, 1] := [grow_table::1::1::1::high_chain, 1];
+  [grow_table::1::1::1::high_chain, 1] := [grow_table::1::1::1::hptr, 1];
+  [grow_table::1::1::1::hptr, 2; hash_next, 1] := [grow_table::1::1::1::low_chain, 1];
+  [grow_table::1::1::1::low_chain, 1] := [grow_table::1::1::1::hptr, 1];
+  [grow_table::1::1::1::hptr, 1] := [grow_table::1::1::1::hash_next, 1];
+  [grow_table::1::newtable, 2],[grow_table::1::1::hash_chain, 2] := [grow_table::1::1::1::low_chain, 1];
+  [grow_table::hash, 2; hash_nchains, 2],[grow_table::1::newtable, 2],[grow_table::1::1::hash_chain, 2] := [grow_table::1::1::1::high_chain, 1];
+  [grow_table::1::1::hash_chain, 1] := [grow_table::1::1::hash_chain, 1];
+  [grow_table::hash, 2; hash_table, 1] := [grow_table::1::newtable, 1];
+  [grow_table::hash, 2; hash_mask, 1] := [grow_table::1::1::hash_mask, 1];
+  [grow_table::hash, 2; hash_nchains, 1] := [grow_table::hash, 2; hash_nchains, 1];
+  [grow_table::hash, 2; hash_lowmark, 1] := [grow_table::hash, 2; hash_lowmark, 1];
+  [grow_table::hash, 2; hash_highmark, 1] := [grow_table::hash, 2; hash_highmark, 1];
+  [grow_table::$tmp::return_value_hash_verify$2, 1] r= hash_verify([grow_table::hash, 1]);
+
+}
+
+hash_size
+([hash_size::hash, 1])
+([hash_size::hash, 2; hash_nchains, 1])
+{
+
+}
+
+hash_isfull
+([hash_isfull::hash, 1])
+([hash_isfull::hash, 2; hash_maxcount, 1],[hash_isfull::hash, 2; hash_nodecount, 1])
+{
+
+}
+
+hash_isempty
+([hash_isempty::hash, 1])
+([hash_isempty::hash, 2; hash_nodecount, 1])
+{
+
+}
+
+shrink_table
+([shrink_table::hash, 1])
+()
+{
+  [shrink_table::1::hash_nchains, 1] := [shrink_table::hash, 2; hash_nchains, 1];
+  [shrink_table::1::hash_chain, 1] := <0>;
+  [shrink_table::1::low_chain, 1] := [shrink_table::hash, 2; hash_table, 2],[shrink_table::1::hash_chain, 2];
+  [shrink_table::1::high_chain, 1] := [shrink_table::hash, 2; hash_table, 2],[shrink_table::1::hash_chain, 2],[shrink_table::1::hash_nchains, 2];
+  [shrink_table::1::low_tail, 1] := [shrink_table::1::low_chain, 1];
+  [shrink_table::$tmp::tmp_if_expr$1, 1] := [shrink_table::1::low_tail, 2; hash_next, 1];
+  [shrink_table::$tmp::tmp_if_expr$1, 1] := <0>;
+  [shrink_table::1::low_tail, 1] := [shrink_table::1::low_tail, 2; hash_next, 1];
+  [shrink_table::1::low_tail, 2; hash_next, 1] := [shrink_table::1::high_chain, 1];
+  [shrink_table::hash, 2; hash_table, 2],[shrink_table::1::hash_chain, 2] := [shrink_table::1::high_chain, 1];
+  [shrink_table::1::hash_chain, 1] := [shrink_table::1::hash_chain, 1];
+  [shrink_table::1::newtable, 1] := [shrink_table::$tmp::return_value_realloc$2, 1];
+  [shrink_table::hash, 2; hash_table, 1] := [shrink_table::1::newtable, 1];
+  [shrink_table::hash, 2; hash_mask, 1] := [shrink_table::hash, 2; hash_mask, 1];
+  [shrink_table::hash, 2; hash_nchains, 1] := [shrink_table::1::hash_nchains, 1];
+  [shrink_table::hash, 2; hash_lowmark, 1] := [shrink_table::hash, 2; hash_lowmark, 1];
+  [shrink_table::hash, 2; hash_highmark, 1] := [shrink_table::hash, 2; hash_highmark, 1];
+  [shrink_table::$tmp::return_value_hash_verify$3, 1] r= hash_verify([shrink_table::hash, 1]);
+
+}
+
+hnode_init
+([hnode_init::hnode, 1]; [hnode_init::hash_data, 1])
+([hnode_init::hnode, 1])
+{
+  [hnode_init::hnode, 2; hash_data, 1] := [hnode_init::hash_data, 1];
+  [hnode_init::hnode, 2; hash_next, 1] := <0>;
+
+}
+
+hnode_destroy
+([hnode_destroy::hnode, 1])
+()
+{
+
+}
+
+hnode_free
+([hnode_free::node, 1]; [hnode_free::hash_context, 1])
+()
+{
+
+}
+
+compute_bits
+()
+()
+{
+  [compute_bits::1::val, 1] := <0>;
+  [compute_bits::1::bits, 1] := <0>;
+  [compute_bits::1::bits, 1] := [compute_bits::1::bits, 1];
+  [compute_bits::1::val, 1] := [compute_bits::1::val, 1];
+  [hash_val_t_bit, 1] := [compute_bits::1::bits, 1];
+
+}
+
+is_power_of_two
+([is_power_of_two::arg, 1])
+(<0>; [is_power_of_two::arg, 1])
+{
+  [is_power_of_two::arg, 1] := [is_power_of_two::arg, 1];
+
+}
+
+clear_table
+([clear_table::hash, 1])
+()
+{
+  [clear_table::1::i, 1] := <0>;
+  [clear_table::hash, 2; hash_table, 2],[clear_table::1::i, 2] := <0>;
+  [clear_table::1::i, 1] := [clear_table::1::i, 1];
+
+}
+
+hash_destroy
+([hash_destroy::hash, 1])
+()
+{
+
+}
+
+hash_scan_delfree
+([hash_scan_delfree::hash, 1]; [hash_scan_delfree::node, 1])
+()
+{
+  <0> r= hash_scan_delete([hash_scan_delfree::hash, 1]; [hash_scan_delfree::node, 1]);
+  <0> r= sl_strcmp([hash_scan_delfree::node, 1]; [hash_scan_delfree::hash, 2; hash_context, 1]);
+  <0> r= sl_strcasecmp([hash_scan_delfree::node, 1]; [hash_scan_delfree::hash, 2; hash_context, 1]);
+  <0> r= hash_comp_default([hash_scan_delfree::node, 1]; [hash_scan_delfree::hash, 2; hash_context, 1]);
+  <0> r= hnode_free([hash_scan_delfree::node, 1]; [hash_scan_delfree::hash, 2; hash_context, 1]);
+
+}
+
+options_free
+([options_free::opt, 1])
+()
+{
+  <0> r= sl_free([options_free::opt, 2; ignore_servers, 1]);
+  <0> r= sl_free([options_free::opt, 2; ignore_workgroups, 1]);
+
+}
+
+!!!!
+
+# locks
+[fusesmb_auth_fn_cfg_mutex, 1];
+[cache_mutex, 0]

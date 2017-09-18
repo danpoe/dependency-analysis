@@ -1,0 +1,18 @@
+
+main
+()
+()
+{
+  [x, 3] := <0>; # level LA, yes
+  [y, 2] := <0>; # level LA, yes
+  [z, 1] := <0>; # level LA, no
+  [a, 1; f1, 2] := <0>; # yes
+}
+
+!!!!
+
+[x, 2]; # level LA
+[y, 1]; # level LA
+[z, 0]; # level LN 0
+[a, 1; f1, 1]
+

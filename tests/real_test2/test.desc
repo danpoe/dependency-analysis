@@ -1,0 +1,6 @@
+CORE
+eflite_goto-binaries_eflite-0.4.1_eflite.dep
+-gda -stats
+^EXIT=0$
+^SIGNAL=0$
+--

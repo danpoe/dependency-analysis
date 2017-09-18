@@ -1,0 +1,6 @@
+CORE
+parse_test2.dep
+-s
+^EXIT=0$
+^SIGNAL=0$
+--

@@ -1,0 +1,9 @@
+CORE
+main.dep
+-gda -stats
+^EXIT=0$
+^SIGNAL=0$
+^Number of assignments: 0$
+^Number of calls: 0$
+^Number of functions: 0$
+--

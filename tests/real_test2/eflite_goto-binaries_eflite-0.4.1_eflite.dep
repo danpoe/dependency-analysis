@@ -1,0 +1,940 @@
+main
+([main::argc, 1]; [main::argv, 1])
+(<0>)
+{
+  [main::1::maxclients, 1] := <0>;
+  [main::1::infile, 1] := <0>;
+  [main::1::context, 1] := <0>;
+  [main::1::input, 1] := <0>;
+  [main::1::more_opts, 1] := <0>;
+  [main::1::debug, 1] := <0>;
+  [main::1::daemon_only, 1] := <0>;
+  [main::1::daemon_only, 1] := <0>;
+  [main::1::debug, 1] := <0>;
+  [main::1::input, 1] := [optarg, 1];
+  [main::1::context, 1] := [optarg, 1];
+  [main::1::more_opts, 1] := <0>;
+  [main::$tmp::tmp_statement_expression$3, 1] := [main::$tmp::return_value___builtin_strcmp$4, 1];
+  [main::$tmp::return_value_is_dir$2, 1] r= is_dir([main::1::input, 1]);
+  [main::1::infile, 1] := [main::1::input, 1];
+  [buf, 1] := [main::$tmp::return_value_malloc$5, 1];
+  [main::$tmp::tmp_if_expr$9, 1] := <0>;
+  [main::$tmp::tmp_if_expr$9, 1] := [main::$tmp::return_value_strlen$8, 1];
+  [sockname, 1] r= lookup_string(<0>; <0>);
+  [sockname, 1] := <0>;
+  [sockname, 1] := [main::$tmp::return_value___strdup$7, 1];
+  [main::1::local_fd, 1] r= sockconnect([sockname, 1]);
+  <0> r= passthrough([main::1::infile, 1]; [main::1::local_fd, 1]);
+  [main::1::local_fd, 1] r= sockconnect([sockname, 1]);
+  <0> r= passthrough([main::1::infile, 1]; [main::1::local_fd, 1]);
+  [punct_some, 1] r= lookup_string(<0>; <0>);
+  [punct_some, 1] := <0>;
+  [punct_all, 1] r= lookup_string(<0>; <0>);
+  [punct_all, 1] := <0>;
+  [tone_volume, 1] r= lookup_int(<0>; <0>);
+  [main::$tmp::return_value_lookup_int$10, 1] r= lookup_int(<0>; <0>);
+  [tone_flags, 1] := [tone_flags, 1];
+  [main::$tmp::return_value_lookup_int$11, 1] r= lookup_int(<0>; <0>);
+  [tone_flags, 1] := [tone_flags, 1];
+  [sock, 1] r= sockopen([sockname, 1]);
+  [lang$link1, 1] r= language_open(<0>; [lookup_string, 0]);
+  [main::1::i, 1] := <0>;
+  <0> r= s_get_param([lang$link1, 2; synth, 1]; [main::1::i, 1]; [main::1::i, 1],[default_param, 1]);
+  <0> r= s_set_param([lang$link1, 2; synth, 1]; [main::1::i, 1]; [main::1::i, 1],[default_param, 1]);
+  [main::1::i, 1] := [main::1::i, 1];
+  [default_param, 2] r= lookup_int(<0>; [default_param, 2]);
+  [main::1::max, 1] := [sock, 1];
+  [main::1::fds, 1; fds_bits, 2],[sock, 2] := [main::1::fds, 1; fds_bits, 2],[sock, 1],[sock, 2];
+  [main::1::i, 1] := <0>;
+  [main::1::max, 1] := [main::1::i, 2; fd, 1],[client, 2; fd, 1];
+  [main::1::fds, 1; fds_bits, 2],[main::1::i, 2; fd, 2],[client, 2; fd, 2] := [main::1::fds, 1; fds_bits, 2],[main::1::i, 2; fd, 1],[main::1::i, 2; fd, 2],[client, 2; fd, 1],[client, 2; fd, 2];
+  [main::1::i, 1] := [main::1::i, 1];
+  [main::1::maxclients, 1] := [main::1::maxclients, 1];
+  [client, 1] := [main::$tmp::return_value_realloc$12, 1];
+  [main::$tmp::tmp_post$13, 1] := [numclients, 1];
+  [numclients, 1] := [numclients, 1];
+  <0> r= client_init([main::1::i, 1],[client, 1]);
+  [main::1::i, 1] := <0>;
+  [main::$tmp::return_value_handle$14, 1] r= handle([main::1::i, 1],[client, 1]);
+  [numclients, 1] := [numclients, 1];
+  <0> r= finish(<0>);
+  [main::1::i, 1] := [main::1::i, 1];
+
+}
+
+_start
+()
+()
+{
+  <0> r= __CPROVER_initialize();
+  [argc', 2],[argv', 2] := <0>;
+  <0> r= main([argc', 1]; [argv', 1]);
+
+}
+
+s_close
+([s_close::s, 1])
+(<0>)
+{
+  [ref_count, 1] := [ref_count, 1];
+  [text_thread_cancel, 1] := <0>;
+  [text, 1] := <0>;
+  [ac, 1] := <0>;
+
+}
+
+s_synth
+([s_synth::s, 1]; [s_synth::buffer, 1])
+(<0>)
+{
+  <0> r= add_command([s_synth::s, 1]; <0>; [s_synth::buffer, 1]);
+
+}
+
+s_flush
+([s_flush::s, 1])
+(<0>; <0>)
+{
+  [text_synthpos, 1] := [text_tail, 1];
+  [wave_thread_active, 1] := <0>;
+  [ac_synthpos, 1] := [ac_tail, 1];
+  # case distinction for thread function
+  <0> r=synthesize([s_flush::s, 1]);
+  # case distinction for thread function
+  <0> r=play([s_flush::s, 1]);
+  [ac_synthpos, 1] := [ac_tail, 1];
+
+}
+
+s_clear
+([s_clear::s, 1])
+(<0>)
+{
+  [text_thread_cancel, 1] := <0>;
+  <0> r= close_audiodev();
+  [s_clear::1::i, 1] := <0>;
+  <0> r= ac_destroy([ac, 1],[s_clear::1::i, 1]);
+  [s_clear::1::i, 1] := [s_clear::1::i, 1];
+  <0> r= reset_text_buffer();
+  <0> r= reset_wave_buffer();
+  [wave_thread_active, 1] := <0>;
+  [text_thread_active, 1] := [wave_thread_active, 1];
+  [text_thread_cancel, 1] := <0>;
+
+}
+
+s_get_param
+([s_get_param::s, 1]; [s_get_param::par, 1]; [s_get_param::value, 1])
+(<0>; <0>; <0>)
+{
+  [s_get_param::value, 2] := [s_get_param::s, 2; state, 2; param, 2],[s_get_param::par, 2];
+
+}
+
+s_set_param
+([s_set_param::s, 1]; [s_set_param::par, 1]; [s_set_param::value, 1])
+(<0>; <0>)
+{
+  <0> r= verify_language([s_set_param::s, 1]);
+  [s_set_param::s, 2; state, 2; param, 2],[s_set_param::par, 2] := [s_set_param::value, 1];
+
+}
+
+synthesize
+([synthesize::s, 1])
+(<0>; <0>)
+{
+  [synthesize::1::wptr, 1] := <0>;
+  [synthesize::1::sparam, 1] := [synthesize::s, 2; state, 2; param, 1];
+  <0> r= text_thread_testcancel();
+  <0> r= text_thread_testcancel();
+  [synthesize::1::1::command_length$array_size0, 1] := [synthesize::1::1::command_length, 1];
+  [synthesize::1::command, 1] := [synthesize::1::1::buf, 2];
+  [synthesize::1::wptr, 1] r= generate_tone([synthesize::1::1::2::1::freq, 1]; [synthesize::1::1::2::1::dur, 1]; [synthesize::1::1::2::1::vol, 1]);
+  <0> r= determine_playlen([synthesize::1::sparam, 2]; [synthesize::1::wptr, 1]; [synthesize::1::command, 1]; [synthesize::1::1::playlen, 0]; [synthesize::1::1::skip, 0]);
+  [ac_size, 1] := [ac_size, 1];
+  [ac, 1] := [synthesize::$tmp::return_value_realloc$2, 1];
+  [ac, 2; type, 1],[ac_tail, 2; type, 1] := [synthesize::1::command, 1];
+  [synthesize::$tmp::tmp_post$3, 1] := [ac_tail, 1];
+  [ac_tail, 1] := [ac_tail, 1];
+  [synthesize::$tmp::tmp_post$3, 2; data, 1],[ac, 2; data, 1] := [synthesize::1::wptr, 1];
+  [time_left, 1] := [time_left, 1],[synthesize::1::wptr, 2; sample_rate, 1],[synthesize::1::1::playlen, 1];
+  [ac_synthpos, 1] := [ac_tail, 1];
+  [text_head, 1] := [text_head, 1],[synthesize::1::1::command_length, 1];
+  <0> r= reset_text_buffer();
+  [text_tail, 1] := [text_head, 1],[text_tail, 1];
+  [text_synthpos, 1] := [text_head, 1],[text_synthpos, 1];
+  [text_head, 1] := <0>;
+
+}
+
+synth_open
+([synth_open::context, 1]; [synth_open::lookup, 1])
+(<0>; [synth_open::1::s, 1])
+{
+  [remove_function_pointers::tmp_return_val$1, 1] r= s_synth([synth_open::context, 1]; <0>);
+  [synth_open::1::language, 1] := [remove_function_pointers::tmp_return_val$1, 1];
+  [synth_open::1::language, 1] r= lookup_string([synth_open::context, 1]; <0>);
+  [debug_fp, 1] := [stderr, 1];
+  [synth_open::1::language, 1] := <0>;
+  [text_thread_active, 1] := <0>;
+  [text_thread_cancel, 1] := <0>;
+  [text_size, 1] := <0>;
+  [text, 1] := [synth_open::$tmp::return_value_malloc$1, 1];
+  [text_synthpos, 1] := <0>;
+  [text_tail, 1] := [text_synthpos, 1];
+  [text_head, 1] := [text_tail, 1];
+  [wave_thread_active, 1] := <0>;
+  [ac_size, 1] := <0>;
+  [ac, 1] := [synth_open::$tmp::return_value_malloc$2, 1];
+  [ac_synthpos, 1] := <0>;
+  [ac_tail, 1] := [ac_synthpos, 1];
+  [ac_head, 1] := [ac_tail, 1];
+  [time_left, 1] := <0>;
+  [ref_count, 1] := [ref_count, 1];
+  [synth_open::1::langi, 1] := <0>;
+  [synth_open::1::s, 1] := [state, 1],[synth_open::1::langi, 1];
+  [synth_open::1::langi, 1] := <0>;
+  [synth_open::1::s, 1] := [state, 1],[synth_open::1::langi, 1];
+  [synth_open::1::langi, 1] := <0>;
+  [synth_open::1::s, 1] := <0>;
+  [synth_open::1::s, 2; state, 2; param, 2] := <0>;
+  [synth_open::1::s, 2; state, 2; param, 2] := <0>;
+  [synth_open::1::s, 2; state, 2; param, 2] := <0>;
+  [synth_open::1::s, 2; state, 2; initialized, 1] := <0>;
+
+}
+
+language_open
+([language_open::context, 1]; [language_open::lookup, 1])
+([lang, 0])
+{
+  [lang, 1; synth, 1] r= synth_open([language_open::context, 1]; [language_open::lookup, 1]);
+
+}
+
+add_command
+([add_command::s, 1]; [add_command::id, 1]; [add_command::buffer, 1])
+()
+{
+  [add_command::1::len, 1] := [add_command::$tmp::return_value_strlen$1, 1];
+  [text_size, 1] := [text_size, 1];
+  [text_size, 1] := [text_size, 1],[add_command::1::len, 1];
+  [text, 1] := [add_command::$tmp::return_value_realloc$2, 1];
+  [add_command::$tmp::tmp_post$3, 1] := [text_tail, 1];
+  [text_tail, 1] := [text_tail, 1];
+  [add_command::$tmp::tmp_post$3, 2],[text, 2] := [add_command::id, 1];
+  [text_tail, 1] := [text_tail, 1],[add_command::1::len, 1];
+  [text_tail, 2],[text, 2] := <0>;
+  [text_thread_active, 1] := <0>;
+  # case distinction for thread function
+  <0> r=synthesize([add_command::s, 1]);
+  # case distinction for thread function
+  <0> r=play([add_command::s, 1]);
+
+}
+
+passthrough
+([passthrough::infile, 1]; [passthrough::outfd, 1])
+()
+{
+  <0> r= terror(<0>);
+  [passthrough::1::fd, 1] := <0>;
+  [passthrough::1::size, 1] := [passthrough::$tmp::return_value_read$1, 1];
+  <0> r= terror(<0>);
+  <0> r= fstat([passthrough::1::fd, 1]; [passthrough::1::3::2::stat, 0]);
+  [passthrough::1::3::2::is_fifo, 1] := [passthrough::1::3::2::stat, 1; st_mode, 1];
+  [passthrough::$tmp::tmp_if_expr$4, 1] := [passthrough::$tmp::return_value_open$3, 1];
+  [passthrough::$tmp::tmp_if_expr$4, 1] := <0>;
+  [passthrough::1::fd, 1] := [passthrough::$tmp::tmp_if_expr$4, 1];
+  <0> r= terror(<0>);
+
+}
+
+stat
+([stat::__path, 1]; [stat::__statbuf, 1])
+([stat::$tmp::return_value___xstat$1, 1])
+{
+
+}
+
+fstat
+([fstat::__fd, 1]; [fstat::__statbuf, 1])
+([fstat::$tmp::return_value___fxstat$1, 1])
+{
+
+}
+
+is_dir
+([is_dir::name, 1])
+([is_dir::1::st, 1; st_mode, 1])
+{
+  <0> r= stat([is_dir::name, 1]; [is_dir::1::st, 0]);
+
+}
+
+sockconnect
+([sockconnect::name, 1])
+(<0>; [sockconnect::$tmp::return_value_sockconnect_tcp$1, 1]; [sockconnect::$tmp::return_value_sockconnect_unix$2, 1]; <0>)
+{
+  [sockconnect::$tmp::return_value_sockconnect_tcp$1, 1] r= sockconnect_tcp([sockconnect::name, 1]);
+  [sockconnect::$tmp::return_value_sockconnect_unix$2, 1] r= sockconnect_unix([sockconnect::name, 1]);
+
+}
+
+add_tone_command
+([add_tone_command::s, 1]; [add_tone_command::freq, 1]; [add_tone_command::dur, 1]; [add_tone_command::vol, 1])
+()
+{
+  <0> r= add_command([add_tone_command::s, 1]; <0>; [add_tone_command::1::buf, 1]);
+
+}
+
+sockopen
+([sockopen::name, 1])
+(<0>; [sockopen::$tmp::return_value_sockopen_tcp$1, 1]; [sockopen::$tmp::return_value_sockopen_unix$2, 1]; <0>)
+{
+  [sockopen::$tmp::return_value_sockopen_tcp$1, 1] r= sockopen_tcp([sockopen::name, 1]);
+  [sockopen::$tmp::return_value_sockopen_unix$2, 1] r= sockopen_unix([sockopen::name, 1]);
+
+}
+
+do_tone
+([do_tone::s, 1]; [do_tone::freq, 1]; [do_tone::dur, 1]; [do_tone::vol, 1]; [do_tone::flags, 1])
+()
+{
+  <0> r= add_tone_command([do_tone::s, 1]; [do_tone::freq, 1]; [do_tone::dur, 1]; [do_tone::vol, 1]);
+
+}
+
+generate_tone
+([generate_tone::freq, 1]; [generate_tone::dur, 1]; [generate_tone::vol, 1])
+([generate_tone::1::wptr, 1]; <0>; [generate_tone::1::wptr, 1])
+{
+  [generate_tone::1::max, 1] := [generate_tone::freq, 1],[generate_tone::dur, 1];
+  [generate_tone::1::step, 1] := [generate_tone::freq, 1];
+  [generate_tone::1::wptr, 1] := [generate_tone::$tmp::return_value_cst_safe_alloc$1, 1];
+  [generate_tone::1::wptr, 2; num_samples, 1] := [generate_tone::1::max, 1],[generate_tone::1::step, 1];
+  [generate_tone::1::wptr, 2; samples, 1] := [generate_tone::$tmp::return_value_cst_safe_alloc$2, 1];
+  [generate_tone::1::wptr, 2; num_channels, 1] := <0>;
+  [generate_tone::1::wptr, 2; sample_rate, 1] := <0>;
+  [generate_tone::1::i, 1] := <0>;
+  [generate_tone::1::n, 1] := <0>;
+  [generate_tone::1::i, 2],[generate_tone::1::wptr, 2; samples, 2] := [generate_tone::vol, 1],[generate_tone::$tmp::return_value_sin$3, 1];
+  [generate_tone::1::n, 1] := [generate_tone::1::step, 1],[generate_tone::1::n, 1];
+  [generate_tone::1::i, 1] := [generate_tone::1::i, 1];
+
+}
+
+atoi
+([atoi::__nptr, 1])
+([atoi::$tmp::return_value_strtol$1, 1])
+{
+
+}
+
+terror
+([terror::s, 1])
+()
+{
+  [terror::1::errnum, 1] := [terror::$tmp::return_value___errno_location$1, 2];
+
+}
+
+setting_add
+([setting_add::name, 1]; [setting_add::value, 1])
+()
+{
+  [setting_add::1::p, 1] := [settings, 1];
+  [settings, 1] := [setting_add::$tmp::return_value_malloc$1, 1];
+  [setting_add::1::p, 1] := [settings, 1];
+  [setting_add::1::p, 1] := [setting_add::1::p, 2; next, 1];
+  [setting_add::1::p, 2; next, 1] := [setting_add::$tmp::return_value_malloc$2, 1];
+  [setting_add::1::p, 1] := [setting_add::1::p, 2; next, 1];
+  [setting_add::1::p, 2; name, 1] := [setting_add::$tmp::return_value___strdup$3, 1];
+  [setting_add::1::p, 2; value, 1] := [setting_add::$tmp::return_value___strdup$4, 1];
+  [setting_add::1::p, 2; next, 1] := <0>;
+
+}
+
+settings_init
+()
+(<0>; <0>)
+{
+  [settings_init::1::p, 1] := [settings_init::1::buf, 1];
+  [settings_init::1::p, 1] := [settings_init::1::p, 1];
+  [settings_init::$tmp::tmp_if_expr$2, 1] := <0>;
+  [settings_init::$tmp::tmp_if_expr$2, 1] := [settings_init::1::p, 2];
+  [settings_init::1::p, 2] := <0>;
+  [settings_init::1::p, 1] := [settings_init::1::buf, 1];
+  [settings_init::1::p, 1] := [settings_init::1::p, 1];
+  [settings_init::$tmp::tmp_post$5, 1] := [settings_init::1::p, 1];
+  [settings_init::1::p, 1] := [settings_init::1::p, 1];
+  [settings_init::$tmp::tmp_post$5, 2] := <0>;
+  <0> r= setting_add([settings_init::1::buf, 1]; [settings_init::1::p, 1]);
+
+}
+
+lookup_string
+([lookup_string::context, 1]; [lookup_string::name, 1])
+([lookup_string::1::p, 2; value, 1]; <0>)
+{
+  [lookup_string::$tmp::return_value_settings_init$1, 1] r= settings_init();
+  [lookup_string::1::p, 1] := [settings, 1];
+  [lookup_string::1::p, 1] := [lookup_string::1::p, 2; next, 1];
+
+}
+
+lookup_int
+([lookup_int::name, 1]; [lookup_int::defval, 1])
+([lookup_int::defval, 1]; [lookup_int::$tmp::return_value_atoi$1, 1])
+{
+  [lookup_int::1::val, 1] r= lookup_string(<0>; [lookup_int::name, 1]);
+  [lookup_int::$tmp::return_value_atoi$1, 1] r= atoi([lookup_int::1::val, 1]);
+
+}
+
+es_addtext
+([es_addtext::client, 1]; [es_addtext::buf, 1])
+()
+{
+  [es_addtext::1::i, 1] := <0>;
+  <0> r= s_get_param([lang$link1, 2; synth, 1]; [es_addtext::1::i, 1]; [es_addtext::1::val, 0]);
+  <0> r= s_set_param([lang$link1, 2; synth, 1]; [es_addtext::1::i, 1]; [es_addtext::1::val, 0]);
+  <0> r= es_synthesize();
+  <0> r= s_get_param([lang$link1, 2; synth, 1]; [es_addtext::1::i, 1]; [es_addtext::client, 2; param, 2],[es_addtext::1::i, 2]);
+  <0> r= s_set_param([lang$link1, 2; synth, 1]; [es_addtext::1::i, 1]; [es_addtext::client, 2; param, 2],[es_addtext::1::i, 2]);
+  [es_addtext::1::i, 1] := [es_addtext::1::i, 1];
+  [es_addtext::1::q, 1] := [es_addtext::1::obuf, 1];
+  [es_addtext::1::p, 1] := [es_addtext::buf, 1];
+  [es_addtext::1::q, 2] := <0>;
+  <0> r= s_synth([lang$link1, 2; synth, 1]; [es_addtext::1::obuf, 1]);
+  <0> r= lookup_string([lang$link1, 2; synth, 1]; [es_addtext::1::obuf, 1]);
+  [es_addtext::1::q, 1] := [es_addtext::1::obuf, 1];
+  [es_addtext::$tmp::tmp_post$1, 1] := [es_addtext::1::q, 1];
+  [es_addtext::1::q, 1] := [es_addtext::1::q, 1];
+  [es_addtext::$tmp::tmp_post$1, 2] := [es_addtext::1::p, 2];
+  [es_addtext::$tmp::tmp_post$2, 1] := [es_addtext::1::q, 1];
+  [es_addtext::1::q, 1] := [es_addtext::1::q, 1];
+  [es_addtext::$tmp::tmp_post$2, 2] := <0>;
+  [es_addtext::1::q, 1] := [es_addtext::1::q, 1];
+  [es_addtext::$tmp::tmp_post$3, 1] := [es_addtext::1::q, 1];
+  [es_addtext::1::q, 1] := [es_addtext::1::q, 1];
+  [es_addtext::$tmp::tmp_post$3, 2] := <0>;
+  [es_addtext::1::p, 1] := [es_addtext::1::p, 1];
+  [es_addtext::1::q, 2] := <0>;
+  <0> r= s_synth([lang$link1, 2; synth, 1]; [es_addtext::1::obuf, 1]);
+  <0> r= lookup_string([lang$link1, 2; synth, 1]; [es_addtext::1::obuf, 1]);
+  [text_buffered, 1] := <0>;
+
+}
+
+parse
+([parse::client, 1]; [parse::buf, 1])
+()
+{
+  [parse::1::p, 1] := [parse::buf, 1];
+  [parse::1::p, 1] := [parse::1::p, 1];
+  [parse::1::tmp, 1] := [parse::client, 2; param, 2];
+  [parse::client, 2; param, 2] := [parse::client, 2; param, 2];
+  [parse::client, 2; param, 2] := [parse::client, 2; param, 2];
+  <0> r= es_addtext([parse::client, 1]; [ascii, 2],[parse::1::p, 3]);
+  <0> r= es_synthesize();
+  [parse::client, 2; param, 2] := [parse::1::tmp, 1];
+  [parse::buf, 1] := [parse::buf, 1];
+  [parse::1::count, 1] := <0>;
+  [parse::1::state, 1] := [parse::1::count, 1];
+  [parse::1::i, 1] := [parse::1::state, 1];
+  [parse::buf, 2],[parse::1::i, 2] := <0>;
+  [parse::1::state, 1] := <0>;
+  [parse::$tmp::tmp_post$1, 1] := [parse::1::count, 1];
+  [parse::1::count, 1] := [parse::1::count, 1];
+  [parse::$tmp::tmp_post$1, 2],[parse::1::token, 2] := [parse::buf, 1],[parse::1::i, 1];
+  [parse::1::state, 1] := <0>;
+  [parse::$tmp::tmp_post$2, 1] := [parse::1::count, 1];
+  [parse::1::count, 1] := [parse::1::count, 1];
+  [parse::$tmp::tmp_post$2, 2],[parse::1::token, 2] := [parse::buf, 1],[parse::1::i, 1];
+  [parse::1::state, 1] := <0>;
+  [parse::buf, 2],[parse::1::i, 2] := <0>;
+  [parse::1::state, 1] := <0>;
+  [parse::1::i, 1] := [parse::1::i, 1];
+  [parse::$tmp::tmp_statement_expression$31, 1] := [parse::$tmp::return_value___builtin_strcmp$32, 1];
+  [parse::$tmp::tmp_if_expr$33, 1] := [parse::1::token, 2];
+  [parse::$tmp::tmp_if_expr$33, 1] := <0>;
+  <0> r= remove_dectalk_codes([parse::1::token, 2]);
+  <0> r= es_addtext([parse::client, 1]; [parse::1::token, 2]);
+  [parse::$tmp::tmp_statement_expression$29, 1] := [parse::$tmp::return_value___builtin_strcmp$30, 1];
+  <0> r= es_synthesize();
+  [parse::$tmp::tmp_statement_expression$26, 1] := [parse::$tmp::return_value___builtin_strcmp$27, 1];
+  [parse::$tmp::tmp_if_expr$28, 1] := [parse::1::token, 2];
+  [parse::$tmp::tmp_if_expr$28, 1] := <0>;
+  <0> r= remove_dectalk_codes([parse::1::token, 2]);
+  <0> r= es_addtext([parse::client, 1]; [parse::1::token, 2]);
+  <0> r= es_synthesize();
+  [parse::$tmp::tmp_statement_expression$20, 1] := [parse::$tmp::return_value___builtin_strcmp$21, 1];
+  [parse::$tmp::tmp_if_expr$24, 1] := <0>;
+  [parse::$tmp::tmp_statement_expression$22, 1] := [parse::$tmp::return_value___builtin_strcmp$23, 1];
+  [parse::$tmp::tmp_if_expr$24, 1] := [parse::$tmp::tmp_statement_expression$22, 1];
+  [parse::$tmp::tmp_if_expr$25, 1] := [parse::1::token, 2];
+  [parse::$tmp::tmp_if_expr$25, 1] := <0>;
+  <0> r= es_synthesize([parse::client, 1]);
+  [parse::$tmp::return_value_atoi$3, 1] r= atoi([parse::1::token, 2]);
+  [parse::client, 2; param, 2] := [parse::$tmp::return_value_atoi$3, 1];
+  [parse::$tmp::tmp_statement_expression$14, 1] := [parse::$tmp::return_value___builtin_strcmp$15, 1];
+  [parse::$tmp::tmp_if_expr$18, 1] := <0>;
+  [parse::$tmp::tmp_statement_expression$16, 1] := [parse::$tmp::return_value___builtin_strcmp$17, 1];
+  [parse::$tmp::tmp_if_expr$18, 1] := [parse::$tmp::tmp_statement_expression$16, 1];
+  [parse::$tmp::tmp_if_expr$19, 1] := [parse::1::token, 2];
+  [parse::$tmp::tmp_if_expr$19, 1] := <0>;
+  <0> r= es_synthesize([parse::client, 1]);
+  [parse::client, 2; param, 2] r= atoi([parse::1::token, 2]);
+  [parse::$tmp::tmp_statement_expression$12, 1] := [parse::$tmp::return_value___builtin_strcmp$13, 1];
+  <0> r= client_init([parse::client, 1]);
+  [parse::$tmp::tmp_statement_expression$10, 1] := [parse::$tmp::return_value___builtin_strcmp$11, 1];
+  <0> r= s_close([lang$link1, 2; synth, 1]);
+  <0> r= s_flush([lang$link1, 2; synth, 1]);
+  <0> r= s_clear([lang$link1, 2; synth, 1]);
+  <0> r= synthesize([lang$link1, 2; synth, 1]);
+  <0> r= finish([lang$link1, 2; synth, 1]);
+  <0> r= wave_unlock([lang$link1, 2; synth, 1]);
+  <0> r= text_unlock([lang$link1, 2; synth, 1]);
+  <0> r= play([lang$link1, 2; synth, 1]);
+  [parse::$tmp::tmp_statement_expression$7, 1] := [parse::$tmp::return_value___builtin_strcmp$8, 1];
+  [parse::$tmp::tmp_if_expr$9, 1] := [parse::1::token, 2];
+  [parse::$tmp::tmp_if_expr$9, 1] := <0>;
+  <0> r= punct_add([parse::client, 1]; [punct_some, 1]);
+  <0> r= punct_add([parse::client, 1]; [punct_all, 1]);
+  [parse::1::21::freq, 1] r= atoi([parse::1::token, 2]);
+  [parse::1::21::dur, 1] r= atoi([parse::1::token, 2]);
+  <0> r= do_tone([lang$link1, 2; synth, 1]; [parse::1::21::freq, 1]; [parse::1::21::dur, 1]; [tone_volume, 1]; [tone_flags, 1]);
+
+}
+
+finish
+([finish::sig, 1])
+()
+{
+  [finish::1::i, 1] := <0>;
+  [finish::1::i, 1] := [finish::1::i, 1];
+  <0> r= s_close([lang$link1, 2; synth, 1]);
+  <0> r= s_flush([lang$link1, 2; synth, 1]);
+  <0> r= s_clear([lang$link1, 2; synth, 1]);
+  <0> r= synthesize([lang$link1, 2; synth, 1]);
+  <0> r= finish([lang$link1, 2; synth, 1]);
+  <0> r= wave_unlock([lang$link1, 2; synth, 1]);
+  <0> r= text_unlock([lang$link1, 2; synth, 1]);
+  <0> r= play([lang$link1, 2; synth, 1]);
+
+}
+
+reset_text_buffer
+()
+()
+{
+  [text_tail, 1] := <0>;
+  [text_head, 1] := [text_tail, 1];
+  [text_synthpos, 1] := <0>;
+  [text, 2] := <0>;
+
+}
+
+reset_wave_buffer
+()
+()
+{
+  [ac_synthpos, 1] := <0>;
+  [ac_tail, 1] := [ac_synthpos, 1];
+  [ac_head, 1] := [ac_tail, 1];
+  [time_left, 1] := <0>;
+
+}
+
+wave_unlock
+([wave_unlock::function_name, 1])
+()
+{
+
+}
+
+text_unlock
+([text_unlock::function_name, 1])
+()
+{
+
+}
+
+verify_language
+([verify_language::s, 1])
+()
+{
+  [verify_language::1::value, 1] := <0>;
+
+}
+
+es_synthesize
+()
+()
+{
+  <0> r= s_close([lang$link1, 2; synth, 1]);
+  <0> r= s_flush([lang$link1, 2; synth, 1]);
+  <0> r= s_clear([lang$link1, 2; synth, 1]);
+  <0> r= synthesize([lang$link1, 2; synth, 1]);
+  <0> r= finish([lang$link1, 2; synth, 1]);
+  <0> r= wave_unlock([lang$link1, 2; synth, 1]);
+  <0> r= text_unlock([lang$link1, 2; synth, 1]);
+  <0> r= play([lang$link1, 2; synth, 1]);
+  [text_buffered, 1] := <0>;
+
+}
+
+cst_wave_free
+([cst_wave_free::w, 1])
+()
+{
+
+}
+
+ac_destroy
+([ac_destroy::ac, 1])
+()
+{
+  <0> r= cst_wave_free([ac_destroy::ac, 2; data, 1]);
+  [ac_destroy::ac, 2; type, 1] := <0>;
+
+}
+
+close_audiodev
+()
+()
+{
+  [audiodev, 1] := <0>;
+
+}
+
+sockconnect_unix
+([sockconnect_unix::fname, 1])
+(<0>; <0>; <0>; [sockconnect_unix::1::sock, 1])
+{
+  [sockconnect_unix::1::addr, 1; sun_family, 1] := <0>;
+
+}
+
+sockconnect_tcp
+([sockconnect_tcp::port, 1])
+(<0>; [sockconnect_tcp::1::fd, 1])
+{
+  [sockconnect_tcp::1::portnum, 1] r= atoi$link1([sockconnect_tcp::1::p, 1]);
+  [sockconnect_tcp::1::len, 1] := [sockconnect_tcp::port, 1],[sockconnect_tcp::1::p, 1];
+  [sockconnect_tcp::1::host, 2],[sockconnect_tcp::1::len, 2] := <0>;
+  [sockconnect_tcp::1::servaddr, 1; sin_family, 1] := <0>;
+  [sockconnect_tcp::1::3::__x, 1] := [sockconnect_tcp::1::portnum, 1];
+  [sockconnect_tcp::1::3::__v, 1] := [sockconnect_tcp::1::3::__x, 1];
+  [sockconnect_tcp::$tmp::tmp_statement_expression$1, 1] := [sockconnect_tcp::1::3::__v, 1];
+  [sockconnect_tcp::1::servaddr, 1; sin_port, 1] := [sockconnect_tcp::$tmp::tmp_statement_expression$1, 1];
+
+}
+
+determine_playlen
+([determine_playlen::speed, 1]; [determine_playlen::wptr, 1]; [determine_playlen::type, 1]; [determine_playlen::pl, 1]; [determine_playlen::s, 1])
+()
+{
+  [determine_playlen::1::skip, 1] := [determine_playlen::speed, 1],[determine_playlen::wptr, 2; sample_rate, 1];
+  [determine_playlen::1::playlen, 1] := [determine_playlen::wptr, 2; num_samples, 1],[determine_playlen::1::skip, 1];
+  [determine_playlen::1::playlen, 1] := [determine_playlen::1::playlen, 1],[determine_playlen::1::skip, 1];
+  [determine_playlen::1::skip, 1] := <0>;
+  [determine_playlen::1::playlen, 1] := [determine_playlen::wptr, 2; num_samples, 1];
+  [determine_playlen::1::playlen, 1] := <0>;
+  [determine_playlen::pl, 2] := [determine_playlen::1::playlen, 1];
+  [determine_playlen::s, 2] := [determine_playlen::1::skip, 1];
+
+}
+
+play
+([play::s, 1])
+(<0>)
+{
+  [play::1::sparam, 1] := [play::s, 2; state, 2; param, 1];
+  [play::1::1::1::__cancel_routine, 1] := [wave_unlock, 0];
+  [play::1::1::1::__cancel_arg, 1] := <0>;
+  <0> r= s_close([play::1::1::1::__cancel_arg, 1]);
+  <0> r= s_flush([play::1::1::1::__cancel_arg, 1]);
+  <0> r= s_clear([play::1::1::1::__cancel_arg, 1]);
+  <0> r= synthesize([play::1::1::1::__cancel_arg, 1]);
+  <0> r= finish([play::1::1::1::__cancel_arg, 1]);
+  <0> r= wave_unlock([play::1::1::1::__cancel_arg, 1]);
+  <0> r= text_unlock([play::1::1::1::__cancel_arg, 1]);
+  <0> r= play([play::1::1::1::__cancel_arg, 1]);
+  [play::1::wptr, 1] := [ac, 2; data, 1],[ac_head, 2; data, 1];
+  [play::1::type, 1] := [ac, 2; type, 1],[ac_head, 2; type, 1];
+  <0> r= s_close([play::1::1::1::__cancel_arg, 1]);
+  <0> r= s_flush([play::1::1::1::__cancel_arg, 1]);
+  <0> r= s_clear([play::1::1::1::__cancel_arg, 1]);
+  <0> r= synthesize([play::1::1::1::__cancel_arg, 1]);
+  <0> r= finish([play::1::1::1::__cancel_arg, 1]);
+  <0> r= wave_unlock([play::1::1::1::__cancel_arg, 1]);
+  <0> r= text_unlock([play::1::1::1::__cancel_arg, 1]);
+  <0> r= play([play::1::1::1::__cancel_arg, 1]);
+  [play::1::1::2::__cancel_routine, 1] := [wave_unlock, 0];
+  [play::1::1::2::__cancel_arg, 1] := <0>;
+  <0> r= s_close([play::1::1::2::__cancel_arg, 1]);
+  <0> r= s_flush([play::1::1::2::__cancel_arg, 1]);
+  <0> r= s_clear([play::1::1::2::__cancel_arg, 1]);
+  <0> r= synthesize([play::1::1::2::__cancel_arg, 1]);
+  <0> r= finish([play::1::1::2::__cancel_arg, 1]);
+  <0> r= wave_unlock([play::1::1::2::__cancel_arg, 1]);
+  <0> r= text_unlock([play::1::1::2::__cancel_arg, 1]);
+  <0> r= play([play::1::1::2::__cancel_arg, 1]);
+  <0> r= s_close([play::1::1::2::__cancel_arg, 1]);
+  <0> r= s_flush([play::1::1::2::__cancel_arg, 1]);
+  <0> r= s_clear([play::1::1::2::__cancel_arg, 1]);
+  <0> r= synthesize([play::1::1::2::__cancel_arg, 1]);
+  <0> r= finish([play::1::1::2::__cancel_arg, 1]);
+  <0> r= wave_unlock([play::1::1::2::__cancel_arg, 1]);
+  <0> r= text_unlock([play::1::1::2::__cancel_arg, 1]);
+  <0> r= play([play::1::1::2::__cancel_arg, 1]);
+  <0> r= determine_playlen([play::1::sparam, 2]; [play::1::wptr, 1]; [play::1::type, 1]; [play::1::playlen, 0]; [play::1::skip, 0]);
+  [play::1::1::5::__cancel_routine, 1] := [text_unlock, 0];
+  [play::1::1::5::__cancel_arg, 1] := <0>;
+  <0> r= s_close([play::1::1::5::__cancel_arg, 1]);
+  <0> r= s_flush([play::1::1::5::__cancel_arg, 1]);
+  <0> r= s_clear([play::1::1::5::__cancel_arg, 1]);
+  <0> r= synthesize([play::1::1::5::__cancel_arg, 1]);
+  <0> r= finish([play::1::1::5::__cancel_arg, 1]);
+  <0> r= wave_unlock([play::1::1::5::__cancel_arg, 1]);
+  <0> r= text_unlock([play::1::1::5::__cancel_arg, 1]);
+  <0> r= play([play::1::1::5::__cancel_arg, 1]);
+  [time_left, 1] := [time_left, 1],[play::1::playlen, 1],[play::1::wptr, 2; sample_rate, 1];
+  <0> r= s_close([play::1::1::5::__cancel_arg, 1]);
+  <0> r= s_flush([play::1::1::5::__cancel_arg, 1]);
+  <0> r= s_clear([play::1::1::5::__cancel_arg, 1]);
+  <0> r= synthesize([play::1::1::5::__cancel_arg, 1]);
+  <0> r= finish([play::1::1::5::__cancel_arg, 1]);
+  <0> r= wave_unlock([play::1::1::5::__cancel_arg, 1]);
+  <0> r= text_unlock([play::1::1::5::__cancel_arg, 1]);
+  <0> r= play([play::1::1::5::__cancel_arg, 1]);
+  [play::1::1::6::__cancel_routine, 1] := [wave_unlock, 0];
+  [play::1::1::6::__cancel_arg, 1] := <0>;
+  <0> r= s_close([play::1::1::6::__cancel_arg, 1]);
+  <0> r= s_flush([play::1::1::6::__cancel_arg, 1]);
+  <0> r= s_clear([play::1::1::6::__cancel_arg, 1]);
+  <0> r= synthesize([play::1::1::6::__cancel_arg, 1]);
+  <0> r= finish([play::1::1::6::__cancel_arg, 1]);
+  <0> r= wave_unlock([play::1::1::6::__cancel_arg, 1]);
+  <0> r= text_unlock([play::1::1::6::__cancel_arg, 1]);
+  <0> r= play([play::1::1::6::__cancel_arg, 1]);
+  <0> r= close_audiodev();
+  <0> r= ac_destroy([ac, 1],[ac_head, 1]);
+  [ac_head, 1] := [ac_head, 1];
+  <0> r= reset_wave_buffer();
+  [ac_tail, 1] := [ac_head, 1],[ac_tail, 1];
+  [ac_synthpos, 1] := [ac_head, 1],[ac_synthpos, 1];
+  [ac_head, 1] := <0>;
+  <0> r= s_close([play::1::1::6::__cancel_arg, 1]);
+  <0> r= s_flush([play::1::1::6::__cancel_arg, 1]);
+  <0> r= s_clear([play::1::1::6::__cancel_arg, 1]);
+  <0> r= synthesize([play::1::1::6::__cancel_arg, 1]);
+  <0> r= finish([play::1::1::6::__cancel_arg, 1]);
+  <0> r= wave_unlock([play::1::1::6::__cancel_arg, 1]);
+  <0> r= text_unlock([play::1::1::6::__cancel_arg, 1]);
+  <0> r= play([play::1::1::6::__cancel_arg, 1]);
+
+}
+
+client_init
+([client_init::client, 1])
+()
+{
+
+}
+
+punct_add
+([punct_add::client, 1]; [punct_add::str, 1])
+(<0>)
+{
+  [punct_add::1::p, 1] := [punct_add::str, 1];
+  [punct_add::client, 2; punct, 2],[punct_add::1::p, 3] := <0>;
+  [punct_add::1::p, 1] := [punct_add::1::p, 1];
+
+}
+
+atoi$link1
+([atoi::__nptr$link1, 1])
+([atoi::$tmp::return_value_strtol$1$link1, 1])
+{
+
+}
+
+remove_dectalk_codes
+([remove_dectalk_codes::buf, 1])
+()
+{
+  [remove_dectalk_codes::1::in_brackets, 1] := <0>;
+  [remove_dectalk_codes::buf, 2] := <0>;
+  [remove_dectalk_codes::1::in_brackets, 1] := <0>;
+  [remove_dectalk_codes::buf, 2] := <0>;
+  [remove_dectalk_codes::1::in_brackets, 1] := <0>;
+  [remove_dectalk_codes::buf, 2] := <0>;
+  [remove_dectalk_codes::buf, 1] := [remove_dectalk_codes::buf, 1];
+
+}
+
+sockopen_unix
+([sockopen_unix::fname, 1])
+(<0>; <0>; <0>; [sockopen_unix::1::sock, 1])
+{
+  [sockopen_unix::1::addr, 1; sun_family, 1] := <0>;
+
+}
+
+sockopen_tcp
+([sockopen_tcp::name, 1])
+([sockopen_tcp::1::sock, 1])
+{
+  [sockopen_tcp::1::p, 1] := [sockopen_tcp::$tmp::return_value___builtin_strchr$1, 1];
+  [sockopen_tcp::1::port, 1] r= atoi$link2([sockopen_tcp::1::p, 1]);
+  [sockopen_tcp::1::serv_addr, 1; sin_family, 1] := <0>;
+  [sockopen_tcp::1::serv_addr, 1; sin_addr, 1; s_addr, 1] r= __bswap_32(<0>);
+  [sockopen_tcp::1::2::__x, 1] := [sockopen_tcp::1::port, 1];
+  [sockopen_tcp::1::2::__v, 1] := [sockopen_tcp::1::2::__x, 1];
+  [sockopen_tcp::$tmp::tmp_statement_expression$2, 1] := [sockopen_tcp::1::2::__v, 1];
+  [sockopen_tcp::1::serv_addr, 1; sin_port, 1] := [sockopen_tcp::$tmp::tmp_statement_expression$2, 1];
+
+}
+
+__bswap_32
+([__bswap_32::__bsx, 1])
+([__bswap_32::$tmp::return_value___builtin_bswap32$1, 1])
+{
+
+}
+
+handle
+([handle::client, 1])
+(<0>; <0>)
+{
+  [handle::1::in_braces, 1] := <0>;
+  [handle::1::size, 1] := [handle::$tmp::return_value_read$1, 1];
+  [buf, 2],[handle::1::size, 2] := <0>;
+  [handle::$tmp::return_value_string_is_complete$2, 1] r= string_is_complete([buf, 1]; [handle::1::size, 1]);
+  [bufsize, 1] := [bufsize, 1];
+  [buf, 1] := [handle::$tmp::return_value_realloc$3, 1];
+  [handle::1::result, 1] := [handle::$tmp::return_value_read$4, 1];
+  [buf, 2],[handle::1::size, 2] := <0>;
+  [handle::1::size, 1] := [handle::1::size, 1],[handle::1::result, 1];
+  [buf, 2],[handle::1::size, 2] := <0>;
+  [handle::1::p, 1] := [buf, 1];
+  [handle::1::j, 1] := <0>;
+  [handle::1::i, 1] := [handle::1::j, 1];
+  [handle::$tmp::tmp_if_expr$6, 1] := <0>;
+  [handle::$tmp::tmp_if_expr$6, 1] := [buf, 2],[handle::1::i, 2];
+  [handle::$tmp::tmp_if_expr$5, 1] := <0>;
+  [handle::$tmp::tmp_if_expr$5, 1] := [handle::1::p, 2];
+  [handle::1::j, 1] := [handle::1::size, 1];
+  [handle::1::in_braces, 1] := <0>;
+  [handle::1::in_braces, 1] := <0>;
+  [handle::1::i, 1] := [handle::1::j, 1];
+  [handle::1::j, 1] := [handle::1::j, 1];
+  [handle::1::in_braces, 1] := <0>;
+  [buf, 2],[handle::1::i, 2] := [handle::1::in_braces, 1];
+  <0> r= parse([handle::client, 1]; [handle::1::p, 1]);
+  [handle::1::p, 1] := [buf, 1],[handle::1::i, 1];
+  [handle::1::in_braces, 1] := <0>;
+  [handle::1::in_braces, 1] := <0>;
+  [handle::1::i, 1] := [handle::1::i, 1];
+
+}
+
+text_thread_testcancel
+()
+()
+{
+  [text_thread_cancel, 1] := <0>;
+
+}
+
+__CPROVER_initialize
+()
+()
+{
+  [ref_count, 1] := <0>;
+  [v, 1] := <0>;
+  [state, 1] := [private_state, 1],[languages, 1],[s_close, 0],[s_synth, 0],[s_flush, 0],[s_clear, 0],[s_get_param, 0],[s_set_param, 0];
+  [__CPROVER_pipe_count, 1] := <0>;
+  [private_state, 1] := <0>;
+  [ascii, 1] := <0>;
+  [longopts, 1] := <0>;
+  [current_language, 1] := <0>;
+  [debug_fp, 1] := <0>;
+  [default_param, 1] := <0>;
+  [numclients, 1] := <0>;
+  [text_buffered, 1] := <0>;
+  [bufsize, 1] := <0>;
+  [wave_thread, 1] := <0>;
+  [wave_thread_active, 1] := <0>;
+  [wave_mutex, 1] := <0>;
+  [sockname, 1] := <0>;
+  [wave_condition, 1] := <0>;
+  [ac, 1] := <0>;
+  [sock, 1] := <0>;
+  [ac_size, 1] := <0>;
+  [ac_head, 1] := <0>;
+  [settings, 1] := <0>;
+  [ac_tail, 1] := <0>;
+  [punct_some, 1] := <0>;
+  [punct_all, 1] := <0>;
+  [ac_synthpos, 1] := <0>;
+  [tone_volume, 1] := <0>;
+  [time_left, 1] := <0>;
+  [text_thread, 1] := <0>;
+  [tone_flags, 1] := <0>;
+  [text_thread_active, 1] := <0>;
+  [text_thread_cancel, 1] := <0>;
+  [text_mutex, 1] := <0>;
+  [text_condition, 1] := <0>;
+  [text_size, 1] := <0>;
+  [text_head, 1] := <0>;
+  [text_tail, 1] := <0>;
+  [text_synthpos, 1] := <0>;
+  [audiodev, 1] := <0>;
+  [ta, 1] := <0>;
+  [mt_attr, 1] := <0>;
+  [lang$link1, 1] := <0>;
+  [client, 1] := <0>;
+  [buf, 1] := <0>;
+  [__CPROVER_thread_id, 1] := <0>;
+  [__CPROVER_threads_exited, 1] := <0>;
+  [__CPROVER_next_thread_id, 1] := <0>;
+  [__CPROVER_deallocated, 1] := <0>;
+  [__CPROVER_rounding_mode, 1] := <0>;
+  [__CPROVER_dead_object, 1] := <0>;
+  [__CPROVER_malloc_object, 1] := <0>;
+  [__CPROVER_malloc_size, 1] := <0>;
+  [__CPROVER_malloc_is_new_array, 1] := <0>;
+  [__CPROVER_memory_leak, 1] := <0>;
+  [text, 1] := <0>;
+  [languages, 1] := <0>;
+  [lang, 1] := [languages, 1];
+
+}
+
+atoi$link2
+([atoi::__nptr$link2, 1])
+([atoi::$tmp::return_value_strtol$1$link2, 1])
+{
+
+}
+
+string_is_complete
+([string_is_complete::buf, 1]; [string_is_complete::size, 1])
+(<0>; <0>; <0>; <0>)
+{
+  [string_is_complete::1::i, 1] := [string_is_complete::size, 1];
+  [string_is_complete::1::i, 1] := [string_is_complete::1::i, 1];
+
+}
+
+!!!!
+
+# locks
+[wave_mutex, 0];
+[text_mutex, 0]

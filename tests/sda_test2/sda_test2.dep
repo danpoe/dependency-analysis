@@ -1,0 +1,27 @@
+
+# Expected result:
+# 2 assignment
+# 1 calls
+# 2 function
+
+func
+()
+()
+{
+  [x, 1] := <0>;
+}
+
+main
+()
+()
+{
+  [x, 1] := <0>;
+  [y, 1] := <0>;
+  [z, 1] := <0>;
+  <0> r= func();
+}
+
+!!!!
+
+[x, 1]
+

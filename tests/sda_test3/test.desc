@@ -1,0 +1,9 @@
+CORE
+sda_test3.dep
+-sda -stats
+^EXIT=0$
+^SIGNAL=0$
+^Number of assignments: 3$
+^Number of calls: 1$
+^Number of functions: 2$
+--

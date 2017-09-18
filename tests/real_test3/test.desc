@@ -1,0 +1,6 @@
+THOROUGH
+fusesmb_goto-binaries_fusesmb-0.8.7_fusesmb.cache.dep
+-gda -stats
+^EXIT=0$
+^SIGNAL=0$
+--
